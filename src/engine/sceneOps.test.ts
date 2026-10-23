@@ -78,6 +78,16 @@ describe('enterScene', () => {
     enterScene(SCENE_GRAPH.ch1_01, state);
     expect(state).toEqual(snapshot);
   });
+
+  it('повторный вход в hub не сбрасывает hubState (фикс P3d)', () => {
+    const s1 = enterScene(SCENE_GRAPH.ch2_02, makeState());
+    const s2: SaveState = {
+      ...s1,
+      hubState: { sceneId: 'ch2_02', picked: ['ch2_02a'], remaining: 1 },
+    };
+    const s3 = enterScene(SCENE_GRAPH.ch2_02, s2);
+    expect(s3.hubState).toEqual({ sceneId: 'ch2_02', picked: ['ch2_02a'], remaining: 1 });
+  });
 });
 
 describe('advanceNode', () => {
