@@ -28,6 +28,7 @@ export const TRUTH_TABLE: TruthTable = {
       cold_under_pressure: 'true',
       claims_over_simon: 'false',
       loves_simon: 'true',
+      jealous_of_linnet: 'true',
     },
     contradiction: {
       alibi_contradicted_by_otterborn: 'true',
