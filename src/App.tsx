@@ -1,5 +1,6 @@
 import { useGameStore } from './store';
 import { MainMenuScreen } from './screens/MainMenuScreen';
+import { SceneScreen } from './screens/SceneScreen';
 import { Toast } from './components/Toast';
 import type { Screen } from './store';
 
@@ -20,7 +21,7 @@ function renderScreen(screen: Screen) {
     case 'main_menu':
       return <MainMenuScreen />;
     case 'scene':
-      return <p style={{ padding: 'var(--spacing-lg)' }}>SceneScreen (P5b)</p>;
+      return <SceneScreen />;
     case 'notebook':
       return <p style={{ padding: 'var(--spacing-lg)' }}>Notebook (P5c)</p>;
     case 'accusation':
