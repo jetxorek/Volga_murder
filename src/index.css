@@ -1,1 +1,21 @@
-@import "tailwindcss";
+:root {
+  --color-bg: #0e0e12;
+  --color-text: #e8e6e1;
+  --color-accent: #c9a227;
+  --color-muted: #6b6b73;
+}
+
+body {
+  margin: 0;
+  font-family: Georgia, serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.app-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
