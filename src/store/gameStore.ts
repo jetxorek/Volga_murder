@@ -132,7 +132,8 @@ export const useGameStore = create<FullStore>()(
 
       startNewGame: () => {
         const playerId = getOrCreatePlayerId();
-        set({ ...makeInitialData(playerId), screen: 'scene' });
+        const ironPoirot = get().ironPoirot;
+        set({ ...makeInitialData(playerId), ironPoirot, screen: 'scene' });
         get().enterSceneById(START_SCENE);
       },
 
@@ -362,6 +363,7 @@ export const useGameStore = create<FullStore>()(
       storage: createJSONStorage<SaveState>(() => playerScopedStorage),
       partialize: (store) => toSaveState(store),
       merge: (persisted, current) => {
+        if (!persisted) return current;
         const parsed = SaveStateSchema.safeParse(persisted);
         if (!parsed.success) {
           console.error('persist.merge: save state failed validation', parsed.error);
