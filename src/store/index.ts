@@ -13,3 +13,5 @@ export type {
 } from './types';
 export { toSaveState, fromSaveState } from './saveStateMapper';
 export { getOrCreatePlayerId, saveKeyFor } from './playerId';
+export { useGameStore } from './gameStore';
+export type { FullStore, StoreActions } from './gameStore';
