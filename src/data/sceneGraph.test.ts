@@ -189,46 +189,67 @@ describe('sceneGraph: достижимость', () => {
 });
 
 describe('sceneGraph: арифметика слотов', () => {
-  it('сумма слотов по главе совпадает с SLOTS_CONFIG', () => {
+  it('слоты за прохождение совпадают с SLOTS_CONFIG', () => {
     const chapters = [1, 2, 3, 4, 5];
+
     for (const ch of chapters) {
       const inChapter = scenes.filter((s) => s.chapter === ch);
-      const hub = inChapter.filter((s): s is Scene & { hubConfig: NonNullable<Scene['hubConfig']> } => Boolean(s.hubConfig));
-      const router = inChapter.filter(
-        (s) =>
-          !s.hubConfig &&
-          s.slotCost === 0 &&
-          Object.values(s.nodes)[0]?.type === 'choice',
-      );
-      const subOfHub = new Set<string>();
-      const subOfRouter = new Set<string>();
-      for (const h of hub) {
-        if (!h.hubConfig) continue;
-        for (const o of h.hubConfig.options) subOfHub.add(o);
+
+      // 1. Собираем все ID, которые являются целями hub-опций в этой главе.
+      const hubTargets = new Set<string>();
+      for (const scene of inChapter) {
+        if (scene.hubConfig) {
+          for (const optId of scene.hubConfig.options) hubTargets.add(optId);
+        }
       }
-      for (const r of router) {
-        for (const node of Object.values(r.nodes)) {
+
+      // 2. Собираем все ID, которые являются целями choice-опций с nextSceneId.
+      const choiceTargets = new Set<string>();
+      for (const scene of inChapter) {
+        for (const node of Object.values(scene.nodes)) {
           if (node.type === 'choice') {
             for (const opt of node.options) {
-              if (opt.nextSceneId) subOfRouter.add(opt.nextSceneId);
+              if (opt.nextSceneId) choiceTargets.add(opt.nextSceneId);
             }
           }
         }
       }
 
+      // 3. Базовые сцены: slotCost > 0, не являются целями hub/choice.
       let sum = 0;
-      for (const s of inChapter) {
-        if (s.hubConfig) continue;
-        if (router.includes(s)) continue;
-        if (subOfHub.has(s.id)) continue;
-        if (subOfRouter.has(s.id)) continue;
-        sum += s.slotCost;
+      for (const scene of inChapter) {
+        if (scene.hubConfig) continue;
+        if (hubTargets.has(scene.id)) continue;
+        if (choiceTargets.has(scene.id)) continue;
+        sum += scene.slotCost;
       }
-      for (const h of hub) {
-        if (!h.hubConfig) continue;
-        sum += h.hubConfig.pick;
+
+      // 4. Hub: добавляем pick (сколько под-сцен проходится).
+      for (const scene of inChapter) {
+        if (scene.hubConfig) sum += scene.hubConfig.pick;
       }
-      sum += router.length * 1;
+
+      // 5. Каждый choice-узел с nextSceneId в любой сцене главы
+      //    даёт +1 (игрок проходит одну из веток).
+      //    Считаем по сценам, а не по узлам, чтобы не задвоить.
+      let choiceCount = 0;
+      for (const scene of inChapter) {
+        let hasNextSceneChoice = false;
+        for (const node of Object.values(scene.nodes)) {
+          if (node.type === 'choice') {
+            for (const opt of node.options) {
+              if (opt.nextSceneId) {
+                hasNextSceneChoice = true;
+                break;
+              }
+            }
+          }
+          if (hasNextSceneChoice) break;
+        }
+        if (hasNextSceneChoice) choiceCount++;
+      }
+      sum += choiceCount;
+
       expect(sum, `глава ${ch}`).toBe(SLOTS_CONFIG[ch]);
     }
   });
