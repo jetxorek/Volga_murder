@@ -1,6 +1,10 @@
 import { useGameStore } from './store';
 import { MainMenuScreen } from './screens/MainMenuScreen';
 import { SceneScreen } from './screens/SceneScreen';
+import { AccusationScreen } from './screens/AccusationScreen';
+import { AccusationResultScreen } from './screens/AccusationResultScreen';
+import { FinaleScreen } from './screens/FinaleScreen';
+import { SettingsScreen } from './screens/SettingsScreen';
 import { Toast } from './components/Toast';
 import { Overlays } from './components/Overlays';
 import type { Screen } from './store';
@@ -27,12 +31,12 @@ function renderScreen(screen: Screen) {
     case 'notebook':
       return <p style={{ padding: 'var(--spacing-lg)' }}>Notebook (P5c)</p>;
     case 'accusation':
-      return <p style={{ padding: 'var(--spacing-lg)' }}>Accusation (P5d)</p>;
+      return <AccusationScreen />;
     case 'accusation_result':
-      return <p style={{ padding: 'var(--spacing-lg)' }}>AccusationResult (P5d)</p>;
+      return <AccusationResultScreen />;
     case 'finale':
-      return <p style={{ padding: 'var(--spacing-lg)' }}>Finale (P5d)</p>;
+      return <FinaleScreen />;
     case 'settings':
-      return <p style={{ padding: 'var(--spacing-lg)' }}>Settings (P5d)</p>;
+      return <SettingsScreen />;
   }
 }
