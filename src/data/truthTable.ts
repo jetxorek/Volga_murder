@@ -24,7 +24,11 @@ export const TRUTH_TABLE: TruthTable = {
       was_near_linnets_cabin: 'true',
     },
     alibi: { in_cabin_all_night: 'false', visited_simons_cabin: 'true' },
-    psychology: { cold_under_pressure: 'true', claims_over_simon: 'false' },
+    psychology: {
+      cold_under_pressure: 'true',
+      claims_over_simon: 'false',
+      loves_simon: 'true',
+    },
     contradiction: {
       alibi_contradicted_by_otterborn: 'true',
       alibi_contradicted_by_evidence: 'true',
@@ -67,10 +71,15 @@ export const TRUTH_TABLE: TruthTable = {
       writes_everything_down: 'true',
       fearless: 'true',
       knew_killer: 'true',
+      claims_no_knowledge_of_killer: 'false',
     },
   },
   char_04: {
-    psychology: { proud_and_dismissive: 'true', underestimated_jeanne: 'true' },
+    psychology: {
+      proud_and_dismissive: 'true',
+      underestimated_jeanne: 'true',
+      claims_not_aware_of_affair: 'false',
+    },
   },
   group: {
     motive: { love_triangle: 'true', conspiracy_between_simon_and_jeanne: 'true' },

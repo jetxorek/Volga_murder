@@ -179,11 +179,20 @@ describe('sceneGraph: достижимость', () => {
     }
   });
 
-  it('нет тупиков (каждая не-hub сцена имеет end-узел)', () => {
+  it('каждая не-hub сцена имеет выход (end-узел или choice с nextSceneId)', () => {
     for (const scene of scenes) {
       if (scene.hubConfig) continue;
-      const endNodes = Object.values(scene.nodes).filter((n) => n.type === 'end');
-      expect(endNodes.length, `сцена ${scene.id} не имеет end-узла`).toBeGreaterThan(0);
+      const hasExit = Object.values(scene.nodes).some((node) => {
+        if (node.type === 'end') return true;
+        if (node.type === 'choice') {
+          return node.options.some((opt) => Boolean(opt.nextSceneId));
+        }
+        return false;
+      });
+      expect(
+        hasExit,
+        `сцена ${scene.id} не имеет выхода (end или choice→nextSceneId)`,
+      ).toBe(true);
     }
   });
 });

@@ -309,12 +309,13 @@ export const NOTE_MATRIX = {
   n_ch3_01a_01: {
     id: 'n_ch3_01a_01',
     text: 'Я видела, как она выходила',
-    statement: 'Миссис Оттерборн утверждает, что видела Жанну выходящей из каюты Лины',
-    category: 'opportunity',
+    statement:
+      'Миссис Оттерборн утверждает, что видела Жанну выходящей — это противоречит алиби Жанны',
+    category: 'contradiction',
     target: 'char_03',
     attributedTo: 'char_07',
     evidenceType: 'testimony',
-    truthKey: 'left_cabin_at_night',
+    truthKey: 'alibi_contradicted_by_otterborn',
   },
   n_ch3_01a_02: {
     id: 'n_ch3_01a_02',
