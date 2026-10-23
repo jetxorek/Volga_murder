@@ -13,5 +13,5 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
   },
-  ignorePatterns: ['dist', 'node_modules', 'vite.config.ts', 'vitest.config.ts'],
+  ignorePatterns: ['dist', 'node_modules', 'vite.config.ts', 'vitest.config.ts', '.eslintrc.cjs'],
 };
