@@ -221,7 +221,7 @@ describe('chooseOption', () => {
         n2: { type: 'end', id: 'n2', outcome: 'final' },
       },
     };
-    const result = chooseOption(scene, makeState({ suspicion: 50 }), 'o1');
+    const result = chooseOption(scene, makeState({ suspicion: 50, currentNode: 'n1' }), 'o1');
     expect(result.kind).toBe('advanced');
     if (result.kind === 'advanced') expect(result.state.suspicion).toBe(60);
   });
@@ -248,7 +248,7 @@ describe('chooseOption', () => {
         },
       },
     };
-    const result = chooseOption(scene, makeState({ suspicion: 50 }), 'o1');
+    const result = chooseOption(scene, makeState({ suspicion: 50, currentNode: 'n1' }), 'o1');
     expect(result.kind).toBe('invalid');
   });
 

@@ -38,10 +38,11 @@ export function enterScene(scene: Scene, state: SaveState): SaveState {
   const nextGs = scene.onEnter ? applyEffects(gs, scene.onEnter) : gs;
 
   const newSlots = Math.max(0, state.sceneSlotsLeft - scene.slotCost);
-  const existingHubState = state.hubState?.sceneId === scene.id ? state.hubState : null;
   const hubState = scene.hubConfig
-    ? (existingHubState ?? { sceneId: scene.id, picked: [], remaining: scene.hubConfig.pick })
-    : null;
+    ? (state.hubState?.sceneId === scene.id
+        ? state.hubState
+        : { sceneId: scene.id, picked: [], remaining: scene.hubConfig.pick })
+    : state.hubState;
   const visitedScenes = state.visitedScenes.includes(scene.id)
     ? state.visitedScenes
     : [...state.visitedScenes, scene.id];
