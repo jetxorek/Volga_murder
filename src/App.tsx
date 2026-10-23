@@ -2,6 +2,7 @@ import { useGameStore } from './store';
 import { MainMenuScreen } from './screens/MainMenuScreen';
 import { SceneScreen } from './screens/SceneScreen';
 import { Toast } from './components/Toast';
+import { Overlays } from './components/Overlays';
 import type { Screen } from './store';
 
 /** Маршрутизация по screen. Остальные экраны — в P5b–P5d. */
@@ -11,6 +12,7 @@ export default function App() {
   return (
     <div className="app-root">
       {renderScreen(screen)}
+      <Overlays />
       <Toast />
     </div>
   );
