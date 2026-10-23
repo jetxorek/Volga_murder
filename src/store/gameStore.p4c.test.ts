@@ -122,35 +122,44 @@ describe('addNoteFromSpan', () => {
 });
 
 describe('submitAccusation', () => {
-  it('fail при пустом accused + noteIds', () => {
-    useGameStore.getState().submitAccusation(['char_02'], ['n_ch1_01_02', 'n_ch1_01_03', 'n_ch1_02_01']);
+  it('fail при малом наборе', () => {
+    useGameStore.getState().enterSceneById('ch1_01');
+    useGameStore.getState().addNoteFromSpan('n_ch1_01_02');
+    useGameStore.getState().submitAccusation(['char_02'], ['n_ch1_01_02']);
     const s = useGameStore.getState();
     expect(s.screen).toBe('accusation_result');
     expect(s.lastAccusationResult?.outcome).toBe('fail');
   });
 
-  it('full при Пути A: 10 заметок + 2 CULPRITS', () => {
-    // Создаём все 10 заметок Пути A через addNoteFromSpan
-    useGameStore.getState().enterSceneById('ch1_01');
-    const pathA = [
-      'n_ch1_01_02',
-      'n_ch2_03_01',
-      'n_ch2_03_02',
-      'n_ch2_01_02',
-      'n_ch3_01c_03',
-      'n_ch5_01_02',
-      'n_ch2_01_01',
-      'n_ch3_01b_02',
-      'n_ch2_01_03',
-      'n_ch3_04b_01',
+  it('full при Пути A: 10 заметок из разных сцен + 2 CULPRITS', () => {
+    // ВАЖНО: каждая заметка должна быть добавлена из своей сцены,
+    // иначе sourceScene будет одинаковый и strength станет weak.
+    const pathA: Array<[string, string]> = [
+      ['ch1_01', 'n_ch1_01_02'],
+      ['ch2_03', 'n_ch2_03_01'],
+      ['ch2_03', 'n_ch2_03_02'],
+      ['ch2_01', 'n_ch2_01_02'],
+      ['ch3_01c', 'n_ch3_01c_03'],
+      ['ch5_01', 'n_ch5_01_02'],
+      ['ch2_01', 'n_ch2_01_01'],
+      ['ch3_01b', 'n_ch3_01b_02'],
+      ['ch2_01', 'n_ch2_01_03'],
+      ['ch3_04b', 'n_ch3_04b_01'],
     ];
-    for (const id of pathA) useGameStore.getState().addNoteFromSpan(id);
+    for (const [sceneId, noteId] of pathA) {
+      useGameStore.getState().enterSceneById(sceneId);
+      useGameStore.getState().addNoteFromSpan(noteId);
+    }
     expect(useGameStore.getState().notes.length).toBe(10);
 
-    useGameStore.getState().submitAccusation(['char_02', 'char_03'], pathA);
+    useGameStore.getState().submitAccusation(
+      ['char_02', 'char_03'],
+      pathA.map(([, id]) => id),
+    );
     const s = useGameStore.getState();
     expect(s.lastAccusationResult?.outcome).toBe('full');
     expect(s.lastAccusationResult?.coverage).toBe(5);
+    expect(s.lastAccusationResult?.score).toBeGreaterThanOrEqual(8);
   });
 });
 
