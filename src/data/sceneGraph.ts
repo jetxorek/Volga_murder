@@ -10,6 +10,14 @@ export const SLOTS_CONFIG: Record<number, number> = {
   5: 4,
 };
 
+export const CHAPTER_START_SCENES: Record<number, string> = {
+  1: 'ch1_01',
+  2: 'ch2_01',
+  3: 'ch3_01',
+  4: 'ch4_01',
+  5: 'ch5_01',
+};
+
 export const SCENE_GRAPH = {
   // ─── Акт I ───────────────────────────────────────────────
   ch1_01: {
