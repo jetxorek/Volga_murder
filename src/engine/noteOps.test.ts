@@ -6,31 +6,31 @@ const noteMatrix = NOTE_MATRIX;
 
 describe('computeStrength', () => {
   it('false → weak', () => {
-    const span = noteMatrix['n_ch2_04_01'];
-    const strength = computeStrength(span, 'false', 'test_scene', false);
-    expect(strength).toBe('weak');
+    const span = NOTE_MATRIX['n_ch2_04_01'];
+    expect(computeStrength(span, 'false', 'ch2_04', false)).toBe('weak');
   });
 
   it('contradiction + true → strong', () => {
-    const span = noteMatrix['n_ch3_01c_03'];
-    const strength = computeStrength(span, 'true', 'test_scene', false);
-    expect(strength).toBe('strong');
+    const span = NOTE_MATRIX['n_ch3_01c_03'];
+    expect(computeStrength(span, 'true', 'ch3_01c', false)).toBe('strong');
   });
 
   it('fromRiskyScene → strong', () => {
-    const span = noteMatrix['n_ch2_03_02'];
-    const strength = computeStrength(span, 'true', 'test_scene', true);
-    expect(strength).toBe('strong');
+    const span = NOTE_MATRIX['n_ch1_01_03'];
+    expect(computeStrength(span, 'true', 'ch1_01', true)).toBe('strong');
   });
 
-  it('парная в другой сцене → strong', () => {
-    // n_ch1_01_03: char_04, psychology, proud_and_dismissive, true
-    // Есть ли другая заметка с char_04 psychology в другой сцене?
-    // Проверим: n_ch1_01_03 — единственная для char_04 psychology
-    // Значит должна быть weak
-    const span = noteMatrix['n_ch1_01_03'];
-    const strength = computeStrength(span, 'true', 'test_scene', false);
-    expect(strength).toBe('weak');
+  it('без парной в другой сцене → weak', () => {
+    // n_ch4_02_01: char_07 psychology fearless — единственная
+    // char_07.psychology во всём графе.
+    const span = NOTE_MATRIX['n_ch4_02_01'];
+    expect(computeStrength(span, 'true', 'ch4_02', false)).toBe('weak');
+  });
+
+  it('с парной в другой сцене → strong', () => {
+    // n_ch1_01_03: char_04 psychology — парная n_ch1_02_02 в ch1_02.
+    const span = NOTE_MATRIX['n_ch1_01_03'];
+    expect(computeStrength(span, 'true', 'ch1_01', false)).toBe('strong');
   });
 });
 
