@@ -70,7 +70,8 @@ describe('dismissDeath', () => {
     const s = useGameStore.getState();
     expect(s.overlay).toBe('none');
     expect(s.currentScene).toBe('ch3_01');
-    expect(s.sceneSlotsLeft).toBe(4); // resetSlots → 5 - 1
+    // ch3_01 — hub-сцена (slotCost: 0), поэтому после resetSlots (5) слоты не тратятся
+    expect(s.sceneSlotsLeft).toBe(5);
   });
 
   it('ironPoirot: откат к началу игры', () => {
