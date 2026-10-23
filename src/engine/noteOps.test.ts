@@ -21,10 +21,11 @@ describe('computeStrength', () => {
   });
 
   it('без парной в другой сцене → weak', () => {
-    // n_ch4_02_01: char_07 psychology fearless — единственная
-    // char_07.psychology во всём графе.
-    const span = NOTE_MATRIX['n_ch4_02_01'];
-    expect(computeStrength(span, 'true', 'ch4_02', false)).toBe('weak');
+    // n_ch3_01c_01: char_10 alibi heard_shot_and_responded (true).
+    // У char_10.alibi в матрице только n_ch3_01c_01 и n_ch3_01c_02 —
+    // обе в одной сцене ch3_01c. В другой сцене парной нет → weak.
+    const span = NOTE_MATRIX['n_ch3_01c_01'];
+    expect(computeStrength(span, 'true', 'ch3_01c', false)).toBe('weak');
   });
 
   it('с парной в другой сцене → strong', () => {
