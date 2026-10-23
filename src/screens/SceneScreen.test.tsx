@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { SceneScreen } from './SceneScreen';
 import { useGameStore } from '../store';
 
@@ -34,7 +34,7 @@ describe('SceneScreen: narration/dialogue', () => {
     expect(screen.getByText(/Пирогов замечает, что Жанна не сводит глаз/)).toBeInTheDocument();
   });
 
-  it('тап на спане → notes содержит n_ch1_01_01, кнопка disabled', () => {
+  it('тап на спане → notes содержит n_ch1_01_01, кнопка disabled', async () => {
     useGameStore.getState().enterSceneById('ch1_01');
     useGameStore.setState({ currentNode: 'n2' });
     render(<SceneScreen />);
@@ -42,7 +42,9 @@ describe('SceneScreen: narration/dialogue', () => {
     spanBtn.click();
     expect(useGameStore.getState().notes.length).toBe(1);
     expect(useGameStore.getState().notes[0].id).toBe('n_ch1_01_01');
-    expect(spanBtn).toBeDisabled();
+    await waitFor(() => {
+      expect(screen.getByText(/Пирогов замечает/)).toBeDisabled();
+    });
   });
 });
 
