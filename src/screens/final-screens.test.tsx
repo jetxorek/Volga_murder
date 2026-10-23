@@ -57,9 +57,9 @@ describe('AccusationScreen', () => {
     });
     render(<AccusationScreen />);
     screen.getByLabelText('Симон Долин').click();
-    screen.getByLabelText('statement n_ch1_01_02').click();
-    screen.getByLabelText('statement n_ch1_01_03').click();
-    screen.getByLabelText('statement n_ch1_02_01').click();
+    screen.getByLabelText('Жанна утверждает, что Симон женился на деньгах').click();
+    screen.getByLabelText('Лина держится как хозяйка положения').click();
+    screen.getByLabelText('Симон утверждает, что любит Лину').click();
     expect(screen.getByText('Обвинить')).not.toBeDisabled();
   });
 
@@ -69,9 +69,9 @@ describe('AccusationScreen', () => {
     });
     render(<AccusationScreen />);
     screen.getByLabelText('Симон Долин').click();
-    screen.getByLabelText('statement n_ch1_01_02').click();
-    screen.getByLabelText('statement n_ch1_01_03').click();
-    screen.getByLabelText('statement n_ch1_02_01').click();
+    screen.getByLabelText('Жанна утверждает, что Симон женился на деньгах').click();
+    screen.getByLabelText('Лина держится как хозяйка положения').click();
+    screen.getByLabelText('Симон утверждает, что любит Лину').click();
     screen.getByText('Обвинить').click();
     const s = useGameStore.getState();
     expect(s.screen).toBe('accusation_result');
@@ -196,19 +196,19 @@ describe('SettingsScreen', () => {
 
   it('«Сбросить прогресс» с confirm → resetStore, currentScene = ""', () => {
     useGameStore.getState().enterSceneById('ch1_01');
-    vi.spyOn(window, 'confirm').mockReturnValue(true);
+    vi.stubGlobal('confirm', vi.fn(() => true));
     render(<SettingsScreen />);
     screen.getByText('Сбросить прогресс').click();
     expect(useGameStore.getState().currentScene).toBe('');
-    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
   });
 
   it('«Сбросить прогресс» с отменой → no-op', () => {
     useGameStore.getState().enterSceneById('ch1_01');
-    vi.spyOn(window, 'confirm').mockReturnValue(false);
+    vi.stubGlobal('confirm', vi.fn(() => false));
     render(<SettingsScreen />);
     screen.getByText('Сбросить прогресс').click();
     expect(useGameStore.getState().currentScene).toBe('ch1_01');
-    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
   });
 });
