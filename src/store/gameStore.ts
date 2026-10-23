@@ -2,15 +2,20 @@ import { create } from 'zustand';
 import { persist, createJSONStorage, type StateStorage } from 'zustand/middleware';
 import type { SaveState } from '../schemas/saveState';
 import { SaveStateSchema } from '../schemas/saveState';
-import { SCENE_GRAPH, SLOTS_CONFIG, START_SCENE } from '../data/sceneGraph';
+import type { AccusationResult } from '../schemas/accusation';
+import { SCENE_GRAPH, SLOTS_CONFIG, START_SCENE, CHAPTER_START_SCENES } from '../data/sceneGraph';
+import { NOTE_MATRIX } from '../data/noteMatrix';
 import {
   enterScene,
   advanceNode,
   chooseOption as engineChooseOption,
 } from '../engine/sceneOps';
+import { pickHubOption, isHubComplete, getHubCompletionTarget } from '../engine/hubOps';
+import { createNote, addNoteToList } from '../engine/noteOps';
+import { evaluateAccusation } from '../engine/evaluateAccusation';
 import { getOrCreatePlayerId, saveKeyFor } from './playerId';
 import { toSaveState, fromSaveState } from './saveStateMapper';
-import type { Store } from './types';
+import type { Store, Screen, Overlay, FinaleChoice } from './types';
 
 /** Экшены стора. Все save-поля меняются через движок, UI-поля — напрямую. */
 export type StoreActions = {
@@ -21,13 +26,35 @@ export type StoreActions = {
   /** Если есть сохранённый прогресс — показывает сцену; иначе — startNewGame. */
   loadGame: () => void;
   /** Вход в сцену по id. Сбрасывает слоты при смене главы. */
-  enterSceneById: (sceneId: string) => void;
+  enterSceneById: (sceneId: string, options?: { resetSlots?: boolean }) => void;
   /** «Игрок тапнул»: двигает текущий узел. Обрабатывает scene_complete. */
   advance: () => void;
   /** Игрок выбрал опцию на choice-узле. */
   chooseOption: (optionId: string) => void;
   /** Обновляет updatedAt (используется персистом). */
   updateTimestamp: () => void;
+  /** Игрок выбрал под-сцену в hub: pick + вход в под-сцену. */
+  pickHubOptionAction: (subSceneId: string) => void;
+  /** Завершение hub: переход на afterHubSceneId, очистка hubState. */
+  completeHub: () => void;
+  /** Игрок нажал «Продолжить» после смерти. Откат по паттерну 3.3-упрощённый. */
+  dismissDeath: () => void;
+  /** Занести заметку в блокнот по ID из NOTE_MATRIX. */
+  addNoteFromSpan: (noteSpanId: string) => void;
+  /** Отправить обвинение. Сохраняет результат в lastAccusationResult. */
+  submitAccusation: (accused: string[], noteIds: string[]) => void;
+  /** Использовать подсказку (увеличить счётчик). */
+  useHint: (type: 'greyCells' | 'memoryTheater' | 'snowWindow') => void;
+  /** Установить экран. */
+  setScreen: (screen: Screen) => void;
+  /** Установить overlay. */
+  setOverlay: (overlay: Overlay) => void;
+  /** Установить toast (null — скрыть). */
+  setToast: (message: string | null) => void;
+  /** Переключить режим «Железный Пуаро». */
+  toggleIronPoirot: () => void;
+  /** Установить финальный выбор (Закон/Справедливость/Молчание). */
+  setFinaleChoice: (choice: FinaleChoice) => void;
 };
 
 /** Полный стор = данные (Store) + экшены. */
@@ -123,10 +150,9 @@ export const useGameStore = create<FullStore>()(
         set({ screen: 'scene' });
       },
 
-      enterSceneById: (sceneId) => {
+      enterSceneById: (sceneId, options) => {
         const state = get();
-        const graph: Record<string, typeof SCENE_GRAPH[keyof typeof SCENE_GRAPH]> = SCENE_GRAPH;
-        const scene = graph[sceneId];
+        const scene = sceneGraph[sceneId];
         if (!scene) {
           console.error(`enterSceneById: scene ${sceneId} not found`);
           return;
@@ -136,8 +162,17 @@ export const useGameStore = create<FullStore>()(
 
         if (scene.chapter !== state.chapter) {
           const slots = SLOTS_CONFIG[scene.chapter] ?? 0;
-          prepared = { ...prepared, chapter: scene.chapter, sceneSlotsLeft: slots };
+          prepared = {
+            ...prepared,
+            chapter: scene.chapter,
+            sceneSlotsLeft: slots,
+            deathsInChapter: 0,
+          };
+        } else if (options?.resetSlots) {
+          const slots = SLOTS_CONFIG[scene.chapter] ?? 0;
+          prepared = { ...prepared, sceneSlotsLeft: slots };
         }
+
         if (prepared.pendingNextScene !== null) {
           prepared = { ...prepared, pendingNextScene: null };
         }
@@ -222,6 +257,105 @@ export const useGameStore = create<FullStore>()(
       },
 
       updateTimestamp: () => set({ updatedAt: Date.now() }),
+
+      pickHubOptionAction: (subSceneId) => {
+        const state = get();
+        const hub = sceneGraph[state.currentScene];
+        if (!hub) {
+          console.error(`pickHubOptionAction: scene ${state.currentScene} not found`);
+          return;
+        }
+        const result = pickHubOption(hub, subSceneId, state);
+        if (result.kind === 'invalid') {
+          console.error(`pickHubOptionAction: ${result.reason}`);
+          return;
+        }
+        set({ ...result.state, updatedAt: Date.now() });
+        get().enterSceneById(subSceneId);
+      },
+
+      completeHub: () => {
+        const state = get();
+        const hub = sceneGraph[state.currentScene];
+        if (!hub || !('hubConfig' in hub) || !hub.hubConfig) {
+          console.error(`completeHub: ${state.currentScene} is not a hub`);
+          return;
+        }
+        if (!isHubComplete(state)) {
+          console.error(`completeHub: hub not complete`);
+          return;
+        }
+        const target = getHubCompletionTarget(hub, state);
+        if (target.kind === 'invalid') {
+          console.error(`completeHub: ${target.reason}`);
+          return;
+        }
+        set({ hubState: null });
+        get().enterSceneById(target.nextSceneId);
+      },
+
+      dismissDeath: () => {
+        const state = get();
+        if (state.overlay !== 'death') return;
+
+        if (state.ironPoirot) {
+          get().startNewGame();
+          return;
+        }
+
+        const chapterStart = CHAPTER_START_SCENES[state.chapter];
+        if (!chapterStart) {
+          console.error(`dismissDeath: no chapter start for chapter ${state.chapter}`);
+          return;
+        }
+        set({ overlay: 'none', deathContext: null });
+        get().enterSceneById(chapterStart, { resetSlots: true });
+      },
+
+      addNoteFromSpan: (noteSpanId) => {
+        const state = get();
+        const noteMatrix: Record<string, typeof NOTE_MATRIX[keyof typeof NOTE_MATRIX]> = NOTE_MATRIX;
+        const span = noteMatrix[noteSpanId];
+        if (!span) {
+          console.error(`addNoteFromSpan: span ${noteSpanId} not found`);
+          return;
+        }
+        if (state.notes.some((n) => n.id === noteSpanId)) return;
+
+        const scene = sceneGraph[state.currentScene];
+        const fromRiskyScene = scene?.type === 'risky';
+        const note = createNote(span, state.currentScene, fromRiskyScene, Date.now());
+        set({ notes: addNoteToList(state.notes, note), updatedAt: Date.now() });
+        set({ toast: `Заметка добавлена: ${span.statement}` });
+      },
+
+      submitAccusation: (accused, noteIds) => {
+        const state = get();
+        const result: AccusationResult = evaluateAccusation({ accused, noteIds }, state.notes);
+        set({
+          lastAccusationResult: result,
+          screen: 'accusation_result',
+          updatedAt: Date.now(),
+        });
+      },
+
+      useHint: (type) => {
+        const state = get();
+        if (state.ironPoirot) {
+          console.error('useHint: hints disabled in ironPoirot mode');
+          return;
+        }
+        set({
+          hintsUsed: { ...state.hintsUsed, [type]: state.hintsUsed[type] + 1 },
+          toast: `Подсказка использована: ${type}`,
+        });
+      },
+
+      setScreen: (screen) => set({ screen }),
+      setOverlay: (overlay) => set({ overlay }),
+      setToast: (message) => set({ toast: message }),
+      toggleIronPoirot: () => set({ ironPoirot: !get().ironPoirot }),
+      setFinaleChoice: (choice) => set({ finaleChoice: choice }),
     }),
     {
       name: 'mfe_save',
