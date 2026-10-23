@@ -1,6 +1,11 @@
 type AssetEntry = { path: string; alt: string };
 type AudioEntry = { path: string };
 
+/**
+ * Единственный источник путей к ассетам. Все компоненты получают ID
+ * (portraitId, backgroundId), а не путь. Если файла нет на диске —
+ * компонент показывает Placeholder через onError.
+ */
 export const ASSETS: {
   portraits: Record<string, AssetEntry>;
   backgrounds: Record<string, AssetEntry>;
