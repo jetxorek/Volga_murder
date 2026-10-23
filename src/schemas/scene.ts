@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import { ChoiceOptionSchema, ConditionSchema, EffectsSchema } from './effects';
-import { NoteSpanSchema } from './note';
 
 export const SceneTypeSchema = z.enum(['mandatory', 'optional', 'risky', 'death', 'finale']);
 export type SceneType = z.infer<typeof SceneTypeSchema>;
@@ -23,7 +22,7 @@ const NarrationNodeSchema = z
     id: z.string().min(1),
     text: z.string().min(1),
     next: z.string().min(1).optional(),
-    noteSpans: z.array(NoteSpanSchema).optional(),
+    noteSpans: z.array(z.string().min(1)).optional(),
   })
   .strict();
 
@@ -34,7 +33,7 @@ const DialogueNodeSchema = z
     speaker: z.string().min(1),
     text: z.string().min(1),
     next: z.string().min(1).optional(),
-    noteSpans: z.array(NoteSpanSchema).optional(),
+    noteSpans: z.array(z.string().min(1)).optional(),
   })
   .strict();
 
