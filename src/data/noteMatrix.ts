@@ -498,7 +498,7 @@ export const NOTE_MATRIX = {
     target: 'char_09',
     attributedTo: 'char_09',
     evidenceType: 'testimony',
-    truthKey: 'kleptomania',
+    truthKey: 'theft_was_misunderstanding',
   },
   n_ch4_01b_02: {
     id: 'n_ch4_01b_02',
