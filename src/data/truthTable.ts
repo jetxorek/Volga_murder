@@ -50,7 +50,7 @@ export const TRUTH_TABLE: TruthTable = {
   },
   char_08: {
     motive: { has_debts: 'true' },
-    opportunity: { access_to_pearls: 'true' },
+    opportunity: { access_to_pearls: 'true', was_near_pearls: 'true' },
     alibi: { on_deck_smoking: 'false', was_near_pearls: 'true' },
     psychology: { claims_no_interest_in_money: 'false', financially_desperate: 'true' },
     contradiction: { theft_denial_contradicted: 'true' },
@@ -58,7 +58,11 @@ export const TRUTH_TABLE: TruthTable = {
   char_09: {
     motive: { kleptomania: 'true' },
     alibi: { praying_in_cabin: 'true' },
-    psychology: { claims_honest: 'false', kleptomaniac_behaviors: 'true' },
+    psychology: {
+      claims_honest: 'false',
+      kleptomaniac_behaviors: 'true',
+      theft_was_misunderstanding: 'false',
+    },
     contradiction: { kleptomania_denial_contradicted: 'true' },
   },
   char_10: {
