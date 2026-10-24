@@ -4,6 +4,7 @@ import {
   AudioController,
   type AudioContextFactory,
   type AudioContextLike,
+  type AudioNodeLike,
   type AudioParamLike,
   type GainNodeLike,
   type OscillatorNodeLike,
@@ -19,22 +20,27 @@ function createNoopParam(): AudioParamLike {
   };
 }
 
-function createNoopGain(): GainNodeLike {
+function createNoopNode(): AudioNodeLike {
   return {
-    gain: createNoopParam(),
     connect: () => undefined,
     disconnect: () => undefined,
   };
 }
 
+function createNoopGain(): GainNodeLike {
+  return {
+    ...createNoopNode(),
+    gain: createNoopParam(),
+  };
+}
+
 function createNoopOscillator(): OscillatorNodeLike {
   return {
+    ...createNoopNode(),
     frequency: createNoopParam(),
     type: 'sine',
     start: () => undefined,
     stop: () => undefined,
-    connect: () => undefined,
-    disconnect: () => undefined,
   };
 }
 
@@ -43,7 +49,7 @@ function createNoopAudioContext(): AudioContextLike {
   return {
     state: 'running',
     currentTime: 0,
-    destination: null,
+    destination: createNoopNode(),
     resume: () => Promise.resolve(),
     createGain: createNoopGain,
     createOscillator: createNoopOscillator,

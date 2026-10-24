@@ -4,17 +4,21 @@ import type { Track } from './tracks';
 export type AudioContextLike = {
   readonly state: string;
   readonly currentTime: number;
-  readonly destination: unknown;
+  readonly destination: AudioNodeLike;
   resume: () => Promise<void>;
   createGain: () => GainNodeLike;
   createOscillator: () => OscillatorNodeLike;
 };
 
+/** Минимальный интерфейс аудиоузла — независим от DOM и happy-dom. */
+export type AudioNodeLike = {
+  connect(target: AudioNodeLike): void;
+  disconnect(): void;
+};
+
 /** Минимальный интерфейс GainNode. */
-export type GainNodeLike = {
+export type GainNodeLike = AudioNodeLike & {
   gain: AudioParamLike;
-  connect: (...args: never[]) => unknown;
-  disconnect: () => void;
 };
 
 /** Минимальный интерфейс AudioParam. */
@@ -25,13 +29,11 @@ export type AudioParamLike = {
 };
 
 /** Минимальный интерфейс OscillatorNode. */
-export type OscillatorNodeLike = {
+export type OscillatorNodeLike = AudioNodeLike & {
   frequency: AudioParamLike;
   type: string;
   start: (when?: number) => void;
   stop: (when?: number) => void;
-  connect: (...args: never[]) => unknown;
-  disconnect: () => void;
 };
 
 /** Фабрика AudioContext — DI: в браузере real, в тестах mock. */
