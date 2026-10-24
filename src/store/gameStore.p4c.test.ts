@@ -39,12 +39,15 @@ describe('completeHub', () => {
     useGameStore.getState().enterSceneById('ch2_02');
     useGameStore.getState().pickHubOptionAction('ch2_02a');
     // возврат в hub: advance по end-узлу под-сцены ведёт в ch2_02
-    useGameStore.getState().advance(); // n1
-    useGameStore.getState().advance(); // n2
-    useGameStore.getState().advance(); // n3 end → ch2_02
+    // ch2_02a: 4 узла (n1→n2→n3→n4 end) → 4 advance
+    useGameStore.getState().advance(); // n1→n2
+    useGameStore.getState().advance(); // n2→n3
+    useGameStore.getState().advance(); // n3→n4
+    useGameStore.getState().advance(); // n4 end → ch2_02
     expect(useGameStore.getState().currentScene).toBe('ch2_02');
     useGameStore.getState().pickHubOptionAction('ch2_02b');
-    // возврат
+    // возврат: ch2_02b — 4 узла → 4 advance
+    useGameStore.getState().advance();
     useGameStore.getState().advance();
     useGameStore.getState().advance();
     useGameStore.getState().advance();

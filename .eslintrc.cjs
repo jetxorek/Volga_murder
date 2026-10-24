@@ -10,7 +10,7 @@ module.exports = {
   plugins: ['react-hooks', 'react-refresh'],
   rules: {
     '@typescript-eslint/no-explicit-any': 'error',
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^_', argsIgnorePattern: '^_' }],
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
   },
   ignorePatterns: ['dist', 'node_modules', 'vite.config.ts', 'vitest.config.ts', '.eslintrc.cjs'],
