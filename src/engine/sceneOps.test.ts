@@ -108,7 +108,7 @@ describe('advanceNode', () => {
   });
 
   it('end → scene_complete с outcome и nextSceneId', () => {
-    const state = makeState({ currentScene: 'ch1_01', currentNode: 'n6' });
+    const state = makeState({ currentScene: 'ch1_01', currentNode: 'n11' });
     const result = advanceNode(SCENE_GRAPH.ch1_01, state);
     expect(result.kind).toBe('scene_complete');
     if (result.kind === 'scene_complete') {

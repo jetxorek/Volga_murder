@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import type { Note } from '../schemas/note';
-import type { Condition, Effects } from '../schemas/effects';
 import { evaluateCondition, applyEffects } from './effects';
 import type { GameState } from './effects';
 

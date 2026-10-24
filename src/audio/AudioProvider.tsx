@@ -57,7 +57,7 @@ function createNoopAudioContext(): AudioContextLike {
 }
 
 /** Фабрика реального AudioContext с graceful fallback в средах без Web Audio. */
-export const audioContextFactory: AudioContextFactory = () => {
+const audioContextFactory: AudioContextFactory = () => {
   if (typeof AudioContext === 'undefined') {
     return createNoopAudioContext();
   }
