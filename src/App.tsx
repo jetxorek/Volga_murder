@@ -1,4 +1,5 @@
 import { useGameStore } from './store';
+import { AudioProvider } from './audio/AudioProvider';
 import { MainMenuScreen } from './screens/MainMenuScreen';
 import { SceneScreen } from './screens/SceneScreen';
 import { AccusationScreen } from './screens/AccusationScreen';
@@ -15,6 +16,7 @@ export default function App() {
 
   return (
     <div className="app-root">
+      <AudioProvider />
       {renderScreen(screen)}
       <Overlays />
       <Toast />
