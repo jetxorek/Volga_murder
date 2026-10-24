@@ -53,6 +53,8 @@ const makeFullStore = (overrides: Partial<Store> = {}): Store => ({
   lastAccusationResult: null,
   finaleChoice: null,
   ironPoirot: true,
+  audioMuted: false,
+  audioVolume: 0.5,
   ...overrides,
 });
 

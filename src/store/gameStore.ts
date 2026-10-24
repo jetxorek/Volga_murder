@@ -55,6 +55,10 @@ export type StoreActions = {
   toggleIronPoirot: () => void;
   /** Установить финальный выбор (Закон/Справедливость/Молчание). */
   setFinaleChoice: (choice: FinaleChoice) => void;
+  /** Переключить mute звука. */
+  toggleAudioMute: () => void;
+  /** Установить громкость (0..1, клампится). */
+  setAudioVolume: (v: number) => void;
 };
 
 /** Полный стор = данные (Store) + экшены. */
@@ -94,6 +98,8 @@ function makeInitialData(playerId: string): Store {
     lastAccusationResult: null,
     finaleChoice: null,
     ironPoirot: false,
+    audioMuted: false,
+    audioVolume: 0.5,
   };
 }
 
@@ -357,6 +363,13 @@ export const useGameStore = create<FullStore>()(
       setToast: (message) => set({ toast: message }),
       toggleIronPoirot: () => set({ ironPoirot: !get().ironPoirot }),
       setFinaleChoice: (choice) => set({ finaleChoice: choice }),
+
+      toggleAudioMute: () => set({ audioMuted: !get().audioMuted }),
+
+      setAudioVolume: (v) => {
+        const clamped = Math.max(0, Math.min(1, v));
+        set({ audioVolume: clamped });
+      },
     }),
     {
       name: 'mfe_save',

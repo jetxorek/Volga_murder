@@ -78,6 +78,8 @@ export type UiSlice = {
   lastAccusationResult: AccusationResult | null;
   finaleChoice: FinaleChoice;
   ironPoirot: boolean;
+  audioMuted: boolean;
+  audioVolume: number; // 0..1
 };
 
 /** Полный стор = 5 слайсов. Экшены — в P4b. */
