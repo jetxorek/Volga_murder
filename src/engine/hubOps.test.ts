@@ -160,7 +160,7 @@ describe('hub: интеграционный цикл ch2_02', () => {
     expect(state.currentScene).toBe('ch2_02a');
     expect(state.sceneSlotsLeft).toBe(4); // -1 за под-сцену
 
-    // 5. Прохождение под-сцены (n1 → n2 → n3)
+    // 5. Прохождение под-сцены (n1 → n2 → n3 → n4 end)
     const a1 = advanceNode(SCENE_GRAPH.ch2_02a, state);
     if (a1.kind !== 'advanced') throw new Error('adv1');
     state = a1.state;
@@ -168,12 +168,15 @@ describe('hub: интеграционный цикл ch2_02', () => {
     if (a2.kind !== 'advanced') throw new Error('adv2');
     state = a2.state;
     const a3 = advanceNode(SCENE_GRAPH.ch2_02a, state);
-    expect(a3.kind).toBe('scene_complete');
-    if (a3.kind !== 'scene_complete') throw new Error('adv3');
-    expect(a3.nextSceneId).toBe('ch2_02');
+    if (a3.kind !== 'advanced') throw new Error('adv3');
+    state = a3.state;
+    const a4 = advanceNode(SCENE_GRAPH.ch2_02a, state);
+    expect(a4.kind).toBe('scene_complete');
+    if (a4.kind !== 'scene_complete') throw new Error('adv4');
+    expect(a4.nextSceneId).toBe('ch2_02');
 
     // 6. Возврат в hub — hubState НЕ сбрасывается (фикс enterScene)
-    state = enterScene(SCENE_GRAPH.ch2_02, a3.state);
+    state = enterScene(SCENE_GRAPH.ch2_02, a4.state);
     expect(state.hubState?.picked).toEqual(['ch2_02a']);
     expect(state.hubState?.remaining).toBe(1);
 

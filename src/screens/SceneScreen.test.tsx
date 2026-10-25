@@ -16,7 +16,7 @@ describe('SceneScreen: narration/dialogue', () => {
   it('ch1_01 n1: рендерит narration и кнопку «Продолжить»', () => {
     useGameStore.getState().enterSceneById('ch1_01');
     render(<SceneScreen />);
-    expect(screen.getByText(/Вечер на пристани/)).toBeInTheDocument();
+    expect(screen.getByText(/Вечер опускался на Волгу/)).toBeInTheDocument();
     expect(screen.getByText('Продолжить')).toBeInTheDocument();
   });
 
@@ -27,16 +27,16 @@ describe('SceneScreen: narration/dialogue', () => {
     expect(useGameStore.getState().currentNode).toBe('n2');
   });
 
-  it('ch1_01 n2: есть кнопка спана n_ch1_01_01', () => {
+  it('ch1_01 n4: есть кнопка спана n_ch1_01_01', () => {
     useGameStore.getState().enterSceneById('ch1_01');
-    useGameStore.setState({ currentNode: 'n2' });
+    useGameStore.setState({ currentNode: 'n4' });
     render(<SceneScreen />);
     expect(screen.getByText(/Пирогов замечает, что Жанна не сводит глаз/)).toBeInTheDocument();
   });
 
   it('тап на спане → notes содержит n_ch1_01_01, кнопка disabled', async () => {
     useGameStore.getState().enterSceneById('ch1_01');
-    useGameStore.setState({ currentNode: 'n2' });
+    useGameStore.setState({ currentNode: 'n4' });
     render(<SceneScreen />);
     const spanBtn = screen.getByText(/Пирогов замечает, что Жанна не сводит глаз/);
     spanBtn.click();

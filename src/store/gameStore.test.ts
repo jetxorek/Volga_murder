@@ -85,8 +85,9 @@ describe('advance', () => {
 
   it('end node → переход в следующую сцену', () => {
     useGameStore.getState().enterSceneById('ch1_01');
-    // n1→n2→n3→n4→n5→n6(end)→enter ch1_02
-    for (let i = 0; i < 6; i++) useGameStore.getState().advance();
+    // n1→...→n11(end)→enter ch1_02: 11 узлов → 11 advance
+    // (последний advance на end триггерит scene_complete → переход)
+    for (let i = 0; i < 11; i++) useGameStore.getState().advance();
     expect(useGameStore.getState().currentScene).toBe('ch1_02');
     expect(useGameStore.getState().currentNode).toBe('n1');
   });
@@ -140,13 +141,13 @@ describe('integration: полный проход Акта I', () => {
     expect(useGameStore.getState().currentScene).toBe('ch1_01');
     expect(useGameStore.getState().sceneSlotsLeft).toBe(3);
 
-    // ch1_01: 6 advances до end
-    for (let i = 0; i < 6; i++) useGameStore.getState().advance();
+    // ch1_01: 11 узлов, end n11 → 11 advance
+    for (let i = 0; i < 11; i++) useGameStore.getState().advance();
     expect(useGameStore.getState().currentScene).toBe('ch1_02');
     expect(useGameStore.getState().sceneSlotsLeft).toBe(2);
 
-    // ch1_02: 6 advances
-    for (let i = 0; i < 6; i++) useGameStore.getState().advance();
+    // ch1_02: 10 узлов, end n10 → 10 advance
+    for (let i = 0; i < 10; i++) useGameStore.getState().advance();
     expect(useGameStore.getState().currentScene).toBe('ch1_03');
     expect(useGameStore.getState().sceneSlotsLeft).toBe(2); // router cost 0
 
@@ -159,15 +160,60 @@ describe('integration: полный проход Акта I', () => {
     expect(useGameStore.getState().currentScene).toBe('ch1_03a');
     expect(useGameStore.getState().sceneSlotsLeft).toBe(1);
 
-    // ch1_03a: 3 advances (n1→n2→n3 end)
-    for (let i = 0; i < 3; i++) useGameStore.getState().advance();
+    // ch1_03a: 7 узлов, end n7 → 7 advance
+    for (let i = 0; i < 7; i++) useGameStore.getState().advance();
     expect(useGameStore.getState().currentScene).toBe('ch1_04');
     expect(useGameStore.getState().sceneSlotsLeft).toBe(0);
 
-    // ch1_04: 5 advances → ch2_01 (chapter change)
-    for (let i = 0; i < 5; i++) useGameStore.getState().advance();
+    // ch1_04: 10 узлов, end n10 → 10 advance → ch2_01 (chapter change)
+    for (let i = 0; i < 10; i++) useGameStore.getState().advance();
     expect(useGameStore.getState().currentScene).toBe('ch2_01');
     expect(useGameStore.getState().chapter).toBe(2);
     expect(useGameStore.getState().sceneSlotsLeft).toBe(4); // 5 - 1
+  });
+
+  it('start → ch3_01 → ch3_02 → ch3_03 → ch3_04 → ch4_01', () => {
+    // Вход в ch3_02 напрямую (пропускаем hub ch3_01, чтобы не тратить слоты)
+    useGameStore.setState({ chapter: 3, sceneSlotsLeft: 5 });
+    useGameStore.getState().enterSceneById('ch3_02');
+    expect(useGameStore.getState().currentScene).toBe('ch3_02');
+    expect(useGameStore.getState().currentNode).toBe('n1');
+
+    // ch3_02: n1 → n2 → n3 (choice)
+    useGameStore.getState().advance(); // n1→n2
+    useGameStore.getState().advance(); // n2→n3
+    expect(useGameStore.getState().currentNode).toBe('n3');
+
+    // chooseOption o1 «Продолжить» → n_check
+    useGameStore.getState().chooseOption('o1');
+    expect(useGameStore.getState().currentNode).toBe('n_check');
+
+    // n_check (suspicion 0 < 70) → onPass n_pass
+    useGameStore.getState().advance(); // n_check → n_pass
+    expect(useGameStore.getState().currentNode).toBe('n_pass');
+
+    // n_pass → n4 (end)
+    useGameStore.getState().advance(); // n_pass → n4
+    expect(useGameStore.getState().currentNode).toBe('n4');
+
+    // n4 (end) → scene_complete → ch3_03
+    useGameStore.getState().advance();
+    expect(useGameStore.getState().currentScene).toBe('ch3_03');
+
+    // ch3_03: 5 узлов → 5 advance → ch3_04
+    for (let i = 0; i < 5; i++) useGameStore.getState().advance();
+    expect(useGameStore.getState().currentScene).toBe('ch3_04');
+
+    // ch3_04: router — advance на choice не двигает
+    useGameStore.getState().advance();
+    expect(useGameStore.getState().currentScene).toBe('ch3_04');
+
+    // chooseOption o1 → ch3_04a
+    useGameStore.getState().chooseOption('o1');
+    expect(useGameStore.getState().currentScene).toBe('ch3_04a');
+
+    // ch3_04a: 4 узла → 4 advance → ch4_01
+    for (let i = 0; i < 4; i++) useGameStore.getState().advance();
+    expect(useGameStore.getState().currentScene).toBe('ch4_01');
   });
 });

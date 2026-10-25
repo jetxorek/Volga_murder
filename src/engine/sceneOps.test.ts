@@ -108,7 +108,7 @@ describe('advanceNode', () => {
   });
 
   it('end → scene_complete с outcome и nextSceneId', () => {
-    const state = makeState({ currentScene: 'ch1_01', currentNode: 'n6' });
+    const state = makeState({ currentScene: 'ch1_01', currentNode: 'n11' });
     const result = advanceNode(SCENE_GRAPH.ch1_01, state);
     expect(result.kind).toBe('scene_complete');
     if (result.kind === 'scene_complete') {
@@ -129,11 +129,11 @@ describe('advanceNode', () => {
     expect(result.kind).toBe('hub_ready');
   });
 
-  it('check: suspicion 50 < 70 → onPass (n4)', () => {
+  it('check: suspicion 50 < 70 → onPass (n_pass)', () => {
     const state = makeState({ currentScene: 'ch3_02', currentNode: 'n_check', suspicion: 50 });
     const result = advanceNode(SCENE_GRAPH.ch3_02, state);
     expect(result.kind).toBe('advanced');
-    if (result.kind === 'advanced') expect(result.state.currentNode).toBe('n4');
+    if (result.kind === 'advanced') expect(result.state.currentNode).toBe('n_pass');
   });
 
   it('check: suspicion 80 ≥ 70 → onFail (n_death)', () => {
