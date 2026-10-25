@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useGameStore } from './gameStore';
+import { SCENE_GRAPH } from '../data/sceneGraph';
 
 beforeEach(() => {
   try { localStorage.clear(); } catch { /* */ }
