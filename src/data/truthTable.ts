@@ -44,15 +44,15 @@ export const TRUTH_TABLE: TruthTable = {
     contradiction: { initial_denial_was_lie: 'true' },
   },
   char_06: {
-    motive: { embezzled_money: 'true', fears_exposure: 'plausible' },
+    motive: { embezzled_money: 'true' },
     alibi: { reading_in_cabin: 'true' },
-    psychology: { denies_embezzlement: 'false' },
+    psychology: { denies_embezzlement: 'false', fears_exposure: 'plausible', avoids_looking_at_simon: 'true' },
   },
   char_08: {
     motive: { has_debts: 'true' },
     opportunity: { access_to_pearls: 'true', was_near_pearls: 'true' },
     alibi: { on_deck_smoking: 'false', was_near_pearls: 'true' },
-    psychology: { claims_no_interest_in_money: 'false', financially_desperate: 'true' },
+    psychology: { claims_no_interest_in_money: 'false', financially_desperate: 'true', hides_hands_in_pockets: 'true' },
     contradiction: { theft_denial_contradicted: 'true' },
   },
   char_09: {
@@ -60,6 +60,7 @@ export const TRUTH_TABLE: TruthTable = {
     alibi: { praying_in_cabin: 'true' },
     psychology: {
       claims_honest: 'false',
+      crosses_herself_when_lying: 'plausible',
       kleptomaniac_behaviors: 'true',
       theft_was_misunderstanding: 'false',
     },
@@ -68,7 +69,7 @@ export const TRUTH_TABLE: TruthTable = {
   char_10: {
     opportunity: { saw_jeanne_leaving: 'plausible' },
     alibi: { sleeping_in_cabin: 'false', heard_shot_and_responded: 'true' },
-    psychology: { professional_distance: 'true' },
+    psychology: { professional_distance: 'true', unmoved_by_death: 'plausible' },
   },
   char_07: {
     opportunity: { saw_jeanne_leaving: 'true' },

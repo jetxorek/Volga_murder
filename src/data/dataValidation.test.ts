@@ -72,8 +72,8 @@ describe('data: noteMatrix', () => {
   const T: TruthTable = TRUTH_TABLE;
   const spans: NoteSpan[] = Object.values(NOTE_MATRIX);
 
-  it('в матрице ровно 61 заметка', () => {
-    expect(spans.length).toBe(61);
+  it('в матрице ровно 68 заметок', () => {
+    expect(spans.length).toBe(68);
   });
 
   it('ID заметки совпадает с ключом в реестре', () => {
