@@ -48,9 +48,7 @@ export function FinaleScreen() {
               <dt>Очки:</dt>
               <dd style={{ margin: 0 }}>{result.score.toFixed(1)}</dd>
               <dt>Покрытие:</dt>
-              <dd style={{ margin: 0 }}>
-                {result.coverage} / 5
-              </dd>
+              <dd style={{ margin: 0 }}>{result.coverage} / 5</dd>
             </>
           )}
         </dl>

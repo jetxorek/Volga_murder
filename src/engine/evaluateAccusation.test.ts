@@ -68,10 +68,7 @@ describe('evaluateAccusation', () => {
     expect(result1.outcome).not.toBe('full');
 
     // char_02 + char_03 → full
-    const result2 = evaluateAccusation(
-      { accused: ['char_02', 'char_03'], noteIds },
-      notes,
-    );
+    const result2 = evaluateAccusation({ accused: ['char_02', 'char_03'], noteIds }, notes);
     expect(result2.outcome).toBe('full');
     expect(result2.score).toBeGreaterThanOrEqual(8);
     expect(result2.coverage).toBe(5);
@@ -94,9 +91,7 @@ describe('evaluateAccusation: интеграционный тест Пути A',
     ];
 
     const matrix: Record<string, (typeof noteMatrix)[keyof typeof noteMatrix]> = noteMatrix;
-    const notes = pathANoteIds.map((id, idx) =>
-      createNote(matrix[id], 'test_scene', false, idx),
-    );
+    const notes = pathANoteIds.map((id, idx) => createNote(matrix[id], 'test_scene', false, idx));
 
     const result = evaluateAccusation(
       { accused: ['char_02', 'char_03'], noteIds: pathANoteIds },

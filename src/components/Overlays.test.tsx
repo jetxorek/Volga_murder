@@ -89,7 +89,7 @@ describe('HintsOverlay', () => {
     expect(screen.getByText('Снег за окном')).toBeInTheDocument();
   });
 
-  it('тап → useHint, счётчик уменьшается', () => {
+  it('тап → triggerHint, счётчик уменьшается', () => {
     useGameStore.setState({ overlay: 'hints' });
     render(<Overlays />);
     screen.getByText('Серые клеточки').click();

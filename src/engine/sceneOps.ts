@@ -39,9 +39,9 @@ export function enterScene(scene: Scene, state: SaveState): SaveState {
 
   const newSlots = Math.max(0, state.sceneSlotsLeft - scene.slotCost);
   const hubState = scene.hubConfig
-    ? (state.hubState?.sceneId === scene.id
-        ? state.hubState
-        : { sceneId: scene.id, picked: [], remaining: scene.hubConfig.pick })
+    ? state.hubState?.sceneId === scene.id
+      ? state.hubState
+      : { sceneId: scene.id, picked: [], remaining: scene.hubConfig.pick }
     : state.hubState;
   const visitedScenes = state.visitedScenes.includes(scene.id)
     ? state.visitedScenes

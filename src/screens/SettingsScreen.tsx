@@ -1,4 +1,5 @@
 import { useGameStore } from '../store';
+import { AUDIO_ENABLED } from '../audio/config';
 
 /** Настройки: звук, режим «Железный Пуаро», рестарт, сброс прогресса, назад. */
 export function SettingsScreen() {
@@ -28,47 +29,54 @@ export function SettingsScreen() {
     <div style={{ padding: 'var(--spacing-lg)', maxWidth: 560, margin: '0 auto' }}>
       <h1>Настройки</h1>
 
-      <section style={{ marginBottom: 'var(--spacing-lg)' }}>
-        <h2 style={{ fontSize: '1rem' }}>Звук</h2>
-        <label
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 'var(--spacing-sm)',
-            padding: 'var(--spacing-sm) 0',
-            cursor: 'pointer',
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={!audioMuted}
-            onChange={toggleAudioMute}
-            aria-label="Звук включён"
-          />
-          <span>Звук включён</span>
-        </label>
-        <label
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 'var(--spacing-sm)',
-            padding: 'var(--spacing-sm) 0',
-            opacity: audioMuted ? 0.5 : 1,
-          }}
-        >
-          <span>Громкость: {Math.round(audioVolume * 100)}%</span>
-          <input
-            type="range"
-            min={0}
-            max={1}
-            step={0.05}
-            value={audioVolume}
-            disabled={audioMuted}
-            onChange={(e) => setAudioVolume(Number(e.target.value))}
-            aria-label="Громкость"
-          />
-        </label>
-      </section>
+      {AUDIO_ENABLED ? (
+        <section style={{ marginBottom: 'var(--spacing-lg)' }}>
+          <h2 style={{ fontSize: '1rem' }}>Звук</h2>
+          <label
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'var(--spacing-sm)',
+              padding: 'var(--spacing-sm) 0',
+              cursor: 'pointer',
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={!audioMuted}
+              onChange={toggleAudioMute}
+              aria-label="Звук включён"
+            />
+            <span>Звук включён</span>
+          </label>
+          <label
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'var(--spacing-sm)',
+              padding: 'var(--spacing-sm) 0',
+              opacity: audioMuted ? 0.5 : 1,
+            }}
+          >
+            <span>Громкость: {Math.round(audioVolume * 100)}%</span>
+            <input
+              type="range"
+              min={0}
+              max={1}
+              step={0.05}
+              value={audioVolume}
+              disabled={audioMuted}
+              onChange={(e) => setAudioVolume(Number(e.target.value))}
+              aria-label="Громкость"
+            />
+          </label>
+        </section>
+      ) : (
+        <section style={{ marginBottom: 'var(--spacing-lg)' }}>
+          <h2 style={{ fontSize: '1rem' }}>Звук</h2>
+          <p style={{ color: 'var(--color-text-muted)' }}>Звук отключён в этой сборке.</p>
+        </section>
+      )}
 
       <section style={{ marginBottom: 'var(--spacing-lg)' }}>
         <h2 style={{ fontSize: '1rem' }}>Режим игры</h2>
@@ -107,7 +115,11 @@ export function SettingsScreen() {
         </button>
         <button
           onClick={onResetProgress}
-          style={{ width: '100%', borderColor: 'var(--color-danger)', color: 'var(--color-danger)' }}
+          style={{
+            width: '100%',
+            borderColor: 'var(--color-danger)',
+            color: 'var(--color-danger)',
+          }}
         >
           Сбросить прогресс
         </button>

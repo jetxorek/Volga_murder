@@ -12,7 +12,7 @@ import { HubPanel } from '../components/HubPanel';
 export function SceneScreen() {
   const currentScene = useGameStore((s) => s.currentScene);
   const currentNode = useGameStore((s) => s.currentNode);
-  const sceneGraph: Record<string, typeof SCENE_GRAPH[keyof typeof SCENE_GRAPH]> = SCENE_GRAPH;
+  const sceneGraph: Record<string, (typeof SCENE_GRAPH)[keyof typeof SCENE_GRAPH]> = SCENE_GRAPH;
 
   const scene = sceneGraph[currentScene];
   if (!scene) {

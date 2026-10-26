@@ -10,7 +10,7 @@ type TextPanelProps = {
 /** Текст узла (narration/dialogue) + кнопки спанов + «Продолжить». */
 export function TextPanel({ node }: TextPanelProps) {
   const advance = useGameStore((s) => s.advance);
-  const characters: Record<string, typeof CHARACTERS[keyof typeof CHARACTERS]> = CHARACTERS;
+  const characters: Record<string, (typeof CHARACTERS)[keyof typeof CHARACTERS]> = CHARACTERS;
 
   return (
     <div style={{ padding: 'var(--spacing-md)' }}>

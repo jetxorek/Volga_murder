@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { SettingsScreen } from './SettingsScreen';
 import { useGameStore } from '../store';
+import { AUDIO_ENABLED } from '../audio/config';
 
 beforeEach(() => {
   try {
@@ -13,7 +14,7 @@ beforeEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe('SettingsScreen: звук', () => {
+describe.skipIf(!AUDIO_ENABLED)('SettingsScreen: звук', () => {
   it('по умолчанию звук включён, громкость 50%', () => {
     render(<SettingsScreen />);
     expect(screen.getByLabelText('Звук включён')).toBeChecked();
@@ -47,6 +48,16 @@ describe('SettingsScreen: звук', () => {
   });
 });
 
+describe('SettingsScreen: аудио-заглушка', () => {
+  it('при AUDIO_ENABLED=false — нет чекбокса звука, есть текст «отключён»', () => {
+    if (AUDIO_ENABLED) return;
+    render(<SettingsScreen />);
+    expect(screen.queryByLabelText('Звук включён')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Громкость')).not.toBeInTheDocument();
+    expect(screen.getByText(/Звук отключён в этой сборке/)).toBeInTheDocument();
+  });
+});
+
 describe('SettingsScreen: режим', () => {
   it('toggle ironPoirot', () => {
     render(<SettingsScreen />);
@@ -59,7 +70,10 @@ describe('SettingsScreen: режим', () => {
 describe('SettingsScreen: прогресс', () => {
   it('«Начать заново» с confirm → resetStore + startNewGame', () => {
     useGameStore.getState().enterSceneById('ch1_01');
-    vi.stubGlobal('confirm', vi.fn(() => true));
+    vi.stubGlobal(
+      'confirm',
+      vi.fn(() => true),
+    );
     render(<SettingsScreen />);
     fireEvent.click(screen.getByText('Начать заново'));
     const s = useGameStore.getState();
@@ -74,7 +88,10 @@ describe('SettingsScreen: прогресс', () => {
 
   it('«Сбросить прогресс» с confirm → resetStore, currentScene = ""', () => {
     useGameStore.getState().enterSceneById('ch1_01');
-    vi.stubGlobal('confirm', vi.fn(() => true));
+    vi.stubGlobal(
+      'confirm',
+      vi.fn(() => true),
+    );
     render(<SettingsScreen />);
     fireEvent.click(screen.getByText('Сбросить прогресс'));
     expect(useGameStore.getState().currentScene).toBe('');
@@ -82,7 +99,10 @@ describe('SettingsScreen: прогресс', () => {
 
   it('«Сбросить прогресс» с отменой → no-op', () => {
     useGameStore.getState().enterSceneById('ch1_01');
-    vi.stubGlobal('confirm', vi.fn(() => false));
+    vi.stubGlobal(
+      'confirm',
+      vi.fn(() => false),
+    );
     render(<SettingsScreen />);
     fireEvent.click(screen.getByText('Сбросить прогресс'));
     expect(useGameStore.getState().currentScene).toBe('ch1_01');

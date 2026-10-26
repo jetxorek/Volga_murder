@@ -2,7 +2,11 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { useGameStore } from './gameStore';
 
 beforeEach(() => {
-  try { localStorage.clear(); } catch { /* */ }
+  try {
+    localStorage.clear();
+  } catch {
+    /* */
+  }
   useGameStore.getState().resetStore();
 });
 
