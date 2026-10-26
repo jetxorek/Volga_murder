@@ -11,7 +11,7 @@ export function HubPanel({ scene }: HubPanelProps) {
   const hubState = useGameStore((s) => s.hubState);
   const pickHubOptionAction = useGameStore((s) => s.pickHubOptionAction);
   const completeHub = useGameStore((s) => s.completeHub);
-  const sceneGraph: Record<string, typeof SCENE_GRAPH[keyof typeof SCENE_GRAPH]> = SCENE_GRAPH;
+  const sceneGraph: Record<string, (typeof SCENE_GRAPH)[keyof typeof SCENE_GRAPH]> = SCENE_GRAPH;
 
   if (!scene.hubConfig) return null;
 

@@ -24,12 +24,12 @@ export function AccusationScreen() {
     return next;
   };
 
-  const characters: Record<string, typeof CHARACTERS[keyof typeof CHARACTERS]> = CHARACTERS;
+  const characters: Record<string, (typeof CHARACTERS)[keyof typeof CHARACTERS]> = CHARACTERS;
   const suspects: Character[] = Object.values(characters)
     .filter((c) => c.isAccusable)
     .sort((a, b) => a.barOrder - b.barOrder);
 
-  const noteMatrix: Record<string, typeof NOTE_MATRIX[keyof typeof NOTE_MATRIX]> = NOTE_MATRIX;
+  const noteMatrix: Record<string, (typeof NOTE_MATRIX)[keyof typeof NOTE_MATRIX]> = NOTE_MATRIX;
   const selectableNotes: NoteSpan[] = notes
     .map((n) => noteMatrix[n.id])
     .filter((s: NoteSpan | undefined): s is NoteSpan => s !== undefined)
@@ -50,8 +50,8 @@ export function AccusationScreen() {
     <div style={{ padding: 'var(--spacing-lg)', maxWidth: 640, margin: '0 auto' }}>
       <h1>Обвинение</h1>
       <p style={{ color: 'var(--color-text-muted)' }}>
-        Назовите виновных и обоснуйте обвинение заметками. Минимум {MIN_NOTES} заметки,
-        обвиняемых — от 1.
+        Назовите виновных и обоснуйте обвинение заметками. Минимум {MIN_NOTES} заметки, обвиняемых —
+        от 1.
       </p>
 
       <section style={{ marginTop: 'var(--spacing-md)' }}>

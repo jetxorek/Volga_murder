@@ -21,7 +21,7 @@ const EVIDENCE_LABELS: Record<Note['evidenceType'], string> = {
 function sourceName(note: Note): string {
   if (note.attributedTo === 'detective') return 'Пирогов';
   if (note.attributedTo === 'world') return 'Документ';
-  const characters: Record<string, typeof CHARACTERS[keyof typeof CHARACTERS]> = CHARACTERS;
+  const characters: Record<string, (typeof CHARACTERS)[keyof typeof CHARACTERS]> = CHARACTERS;
   return characters[note.attributedTo]?.name ?? note.attributedTo;
 }
 
@@ -60,7 +60,13 @@ export function NotebookOverlay() {
                     }}
                   >
                     <div>{n.statement}</div>
-                    <div style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', marginTop: 4 }}>
+                    <div
+                      style={{
+                        color: 'var(--color-text-muted)',
+                        fontSize: '0.75rem',
+                        marginTop: 4,
+                      }}
+                    >
                       {sourceName(n)} · {EVIDENCE_LABELS[n.evidenceType]}
                     </div>
                   </li>

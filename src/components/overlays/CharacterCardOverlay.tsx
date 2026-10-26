@@ -8,7 +8,7 @@ export function CharacterCardOverlay() {
   const activeSpeaker = useGameStore((s) => s.activeSpeaker);
   const setOverlay = useGameStore((s) => s.setOverlay);
 
-  const characters: Record<string, typeof CHARACTERS[keyof typeof CHARACTERS]> = CHARACTERS;
+  const characters: Record<string, (typeof CHARACTERS)[keyof typeof CHARACTERS]> = CHARACTERS;
   const character = activeSpeaker ? characters[activeSpeaker] : undefined;
 
   if (!character) {

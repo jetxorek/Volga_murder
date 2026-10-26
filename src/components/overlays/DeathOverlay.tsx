@@ -14,9 +14,7 @@ export function DeathOverlay() {
   return (
     <ModalFrame title="Смерть" onClose={dismissDeath}>
       <p style={{ fontSize: '1.125rem' }}>{message}</p>
-      {deathContext && (
-        <p style={{ color: 'var(--color-text-muted)' }}>Место: {deathContext}</p>
-      )}
+      {deathContext && <p style={{ color: 'var(--color-text-muted)' }}>Место: {deathContext}</p>}
       <button onClick={dismissDeath} style={{ marginTop: 'var(--spacing-md)', minWidth: 160 }}>
         Продолжить
       </button>

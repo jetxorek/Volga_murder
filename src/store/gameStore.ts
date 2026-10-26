@@ -5,11 +5,7 @@ import { SaveStateSchema } from '../schemas/saveState';
 import type { AccusationResult } from '../schemas/accusation';
 import { SCENE_GRAPH, SLOTS_CONFIG, START_SCENE, CHAPTER_START_SCENES } from '../data/sceneGraph';
 import { NOTE_MATRIX } from '../data/noteMatrix';
-import {
-  enterScene,
-  advanceNode,
-  chooseOption as engineChooseOption,
-} from '../engine/sceneOps';
+import { enterScene, advanceNode, chooseOption as engineChooseOption } from '../engine/sceneOps';
 import { pickHubOption, isHubComplete, getHubCompletionTarget } from '../engine/hubOps';
 import { createNote, addNoteToList } from '../engine/noteOps';
 import { evaluateAccusation } from '../engine/evaluateAccusation';
@@ -44,7 +40,7 @@ export type StoreActions = {
   /** Отправить обвинение. Сохраняет результат в lastAccusationResult. */
   submitAccusation: (accused: string[], noteIds: string[]) => void;
   /** Использовать подсказку (увеличить счётчик). */
-  useHint: (type: 'greyCells' | 'memoryTheater' | 'snowWindow') => void;
+  triggerHint: (type: 'greyCells' | 'memoryTheater' | 'snowWindow') => void;
   /** Установить экран. */
   setScreen: (screen: Screen) => void;
   /** Установить overlay. */
@@ -128,7 +124,7 @@ const playerScopedStorage: StateStorage = {
 };
 
 const initialPlayerId = getOrCreatePlayerId();
-const sceneGraph: Record<string, typeof SCENE_GRAPH[keyof typeof SCENE_GRAPH]> = SCENE_GRAPH;
+const sceneGraph: Record<string, (typeof SCENE_GRAPH)[keyof typeof SCENE_GRAPH]> = SCENE_GRAPH;
 
 /** Zustand store с persist middleware для сохранения прогресса. */
 export const useGameStore = create<FullStore>()(
@@ -321,7 +317,8 @@ export const useGameStore = create<FullStore>()(
 
       addNoteFromSpan: (noteSpanId) => {
         const state = get();
-        const noteMatrix: Record<string, typeof NOTE_MATRIX[keyof typeof NOTE_MATRIX]> = NOTE_MATRIX;
+        const noteMatrix: Record<string, (typeof NOTE_MATRIX)[keyof typeof NOTE_MATRIX]> =
+          NOTE_MATRIX;
         const span = noteMatrix[noteSpanId];
         if (!span) {
           console.error(`addNoteFromSpan: span ${noteSpanId} not found`);
@@ -346,10 +343,10 @@ export const useGameStore = create<FullStore>()(
         });
       },
 
-      useHint: (type) => {
+      triggerHint: (type) => {
         const state = get();
         if (state.ironPoirot) {
-          console.error('useHint: hints disabled in ironPoirot mode');
+          console.error('triggerHint: hints disabled in ironPoirot mode');
           return;
         }
         set({

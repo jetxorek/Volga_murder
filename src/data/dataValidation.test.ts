@@ -90,7 +90,7 @@ describe('data: noteMatrix', () => {
       expect(cat, `категория ${span.category} у ${span.target} отсутствует`).toBeDefined();
       expect(
         cat?.[span.truthKey],
-        `truthKey ${span.truthKey} у ${span.target}.${span.category} отсутствует`
+        `truthKey ${span.truthKey} у ${span.target}.${span.category} отсутствует`,
       ).toBeDefined();
     }
   });
@@ -105,10 +105,9 @@ describe('data: noteMatrix', () => {
   it('все attributedTo — существующие charId, либо detective/world', () => {
     const allowed = new Set<string>([...Object.keys(CHARACTERS), 'detective', 'world']);
     for (const span of spans) {
-      expect(
-        allowed.has(span.attributedTo),
-        `неизвестный attributedTo: ${span.attributedTo}`
-      ).toBe(true);
+      expect(allowed.has(span.attributedTo), `неизвестный attributedTo: ${span.attributedTo}`).toBe(
+        true,
+      );
     }
   });
 
@@ -132,7 +131,10 @@ describe('data: noteMatrix', () => {
       'contradiction',
     ];
     for (const cat of cats) {
-      expect(spans.some((s) => s.category === cat), `категория ${cat} не покрыта`).toBe(true);
+      expect(
+        spans.some((s) => s.category === cat),
+        `категория ${cat} не покрыта`,
+      ).toBe(true);
     }
   });
 

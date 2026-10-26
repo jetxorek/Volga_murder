@@ -2,21 +2,10 @@ import type { Note, NoteLink } from '../schemas/note';
 import type { AccusationResult } from '../schemas/accusation';
 
 export type Screen =
-  | 'main_menu'
-  | 'scene'
-  | 'notebook'
-  | 'accusation'
-  | 'accusation_result'
-  | 'finale'
-  | 'settings';
+  'main_menu' | 'scene' | 'notebook' | 'accusation' | 'accusation_result' | 'finale' | 'settings';
 
 export type Overlay =
-  | 'none'
-  | 'notebook'
-  | 'character_card'
-  | 'hints'
-  | 'chapter_summary'
-  | 'death';
+  'none' | 'notebook' | 'character_card' | 'hints' | 'chapter_summary' | 'death';
 
 export type HubState = {
   sceneId: string;
@@ -83,8 +72,4 @@ export type UiSlice = {
 };
 
 /** Полный стор = 5 слайсов. Экшены — в P4b. */
-export type Store = ProgressSlice &
-  RelationshipsSlice &
-  NotebookSlice &
-  MetaSlice &
-  UiSlice;
+export type Store = ProgressSlice & RelationshipsSlice & NotebookSlice & MetaSlice & UiSlice;
