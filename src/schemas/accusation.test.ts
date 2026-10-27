@@ -63,6 +63,7 @@ describe('AccusationResultSchema', () => {
       contradictionPenalty: 4,
       outcome: 'fail',
       missingCategories: ['motive', 'opportunity', 'alibi', 'psychology'],
+      submittedNoteIds: [],
       accusedCount: 1,
     };
     const result = AccusationResultSchema.safeParse(valid);
@@ -78,6 +79,7 @@ describe('AccusationResultSchema', () => {
       contradictionPenalty: 0,
       outcome: 'full',
       missingCategories: [],
+      submittedNoteIds: [],
       accusedCount: 3,
     };
     const result = AccusationResultSchema.safeParse(valid);
@@ -93,6 +95,7 @@ describe('AccusationResultSchema', () => {
       contradictionPenalty: 0,
       outcome: 'partial_high',
       missingCategories: [],
+      submittedNoteIds: [],
       accusedCount: 2,
     };
     const result = AccusationResultSchema.safeParse(invalid);
@@ -108,6 +111,7 @@ describe('AccusationResultSchema', () => {
       contradictionPenalty: 0,
       outcome: 'success',
       missingCategories: [],
+      submittedNoteIds: [],
       accusedCount: 2,
     };
     const result = AccusationResultSchema.safeParse(invalid);
@@ -123,6 +127,7 @@ describe('AccusationResultSchema', () => {
       contradictionPenalty: -1,
       outcome: 'partial_high',
       missingCategories: [],
+      submittedNoteIds: [],
       accusedCount: 2,
     };
     const result = AccusationResultSchema.safeParse(invalid);

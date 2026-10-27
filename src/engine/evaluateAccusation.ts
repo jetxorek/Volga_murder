@@ -62,6 +62,7 @@ export function evaluateAccusation(
     contradictionPenalty,
     outcome,
     missingCategories,
+    submittedNoteIds: input.noteIds,
     accusedCount: input.accused.length,
   };
 }
