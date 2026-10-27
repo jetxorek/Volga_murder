@@ -24,6 +24,7 @@ describe('initial state', () => {
 
 describe('startNewGame', () => {
   it('сбрасывает и входит в START_SCENE, slots 4→3', () => {
+    useGameStore.setState({ tutorialStepsSeen: ['welcome'] });
     useGameStore.getState().startNewGame();
     const s = useGameStore.getState();
     expect(s.screen).toBe('scene');
@@ -32,6 +33,12 @@ describe('startNewGame', () => {
     expect(s.chapter).toBe(1);
     expect(s.sceneSlotsLeft).toBe(3);
     expect(s.visitedScenes).toContain('ch1_01');
+  });
+
+  it('без пройденного онбординга → screen = tutorial', () => {
+    useGameStore.getState().startNewGame();
+    expect(useGameStore.getState().screen).toBe('tutorial');
+    expect(useGameStore.getState().currentScene).toBe('ch1_01');
   });
 
   it('сохраняет playerId', () => {

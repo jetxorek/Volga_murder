@@ -176,7 +176,8 @@ describe('FinaleScreen', () => {
     screen.getByText('Начать заново').click();
     const s = useGameStore.getState();
     expect(s.currentScene).toBe('ch1_01');
-    expect(s.screen).toBe('scene');
+    // resetStore очищает tutorialStepsSeen → повторный онбординг (P14a)
+    expect(s.screen).toBe('tutorial');
   });
 });
 

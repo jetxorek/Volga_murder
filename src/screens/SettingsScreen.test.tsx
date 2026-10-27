@@ -78,7 +78,8 @@ describe('SettingsScreen: прогресс', () => {
     fireEvent.click(screen.getByText('Начать заново'));
     const s = useGameStore.getState();
     expect(s.currentScene).toBe('ch1_01');
-    expect(s.screen).toBe('scene');
+    // resetStore очищает tutorialStepsSeen → повторный онбординг (P14a)
+    expect(s.screen).toBe('tutorial');
   });
 
   it('«Начать заново» disabled без currentScene', () => {

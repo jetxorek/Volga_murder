@@ -30,10 +30,10 @@ describe('MainMenuScreen', () => {
     expect(screen.getByText('Продолжить')).not.toBeDisabled();
   });
 
-  it('«Новая игра» → screen = scene, currentScene = ch1_01', () => {
+  it('«Новая игра» → screen = tutorial (первый запуск), currentScene = ch1_01', () => {
     render(<MainMenuScreen />);
     screen.getByText('Новая игра').click();
-    expect(useGameStore.getState().screen).toBe('scene');
+    expect(useGameStore.getState().screen).toBe('tutorial');
     expect(useGameStore.getState().currentScene).toBe('ch1_01');
   });
 
