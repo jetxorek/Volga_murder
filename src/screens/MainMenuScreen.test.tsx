@@ -45,6 +45,12 @@ describe('MainMenuScreen', () => {
     expect(useGameStore.getState().screen).toBe('tutorial');
   });
 
+  it('«Как играть» → screen = how_to_play', () => {
+    render(<MainMenuScreen />);
+    fireEvent.click(screen.getByText('Как играть'));
+    expect(useGameStore.getState().screen).toBe('how_to_play');
+  });
+
   it('«Настройки» → screen = settings', () => {
     render(<MainMenuScreen />);
     screen.getByText('Настройки').click();

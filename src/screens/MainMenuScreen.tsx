@@ -31,6 +31,9 @@ export function MainMenuScreen() {
       <button onClick={loadGame} disabled={!currentScene} style={{ minWidth: 240 }}>
         Продолжить
       </button>
+      <button onClick={() => setScreen('how_to_play')} style={{ minWidth: 240 }}>
+        Как играть
+      </button>
       <button onClick={() => setScreen('settings')} style={{ minWidth: 240 }}>
         Настройки
       </button>
