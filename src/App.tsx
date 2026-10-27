@@ -3,6 +3,7 @@ import { AudioProvider } from './audio/AudioProvider';
 import { MainMenuScreen } from './screens/MainMenuScreen';
 import { TutorialScreen } from './screens/TutorialScreen';
 import { HowToPlayScreen } from './screens/HowToPlayScreen';
+import { LibraryScreen } from './screens/LibraryScreen';
 import { SceneScreen } from './screens/SceneScreen';
 import { AccusationScreen } from './screens/AccusationScreen';
 import { AccusationResultScreen } from './screens/AccusationResultScreen';
@@ -34,6 +35,8 @@ function renderScreen(screen: Screen) {
       return <TutorialScreen />;
     case 'how_to_play':
       return <HowToPlayScreen />;
+    case 'library':
+      return <LibraryScreen />;
     case 'scene':
       return <SceneScreen />;
     case 'notebook':
