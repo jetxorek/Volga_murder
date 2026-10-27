@@ -27,6 +27,7 @@ export const AccusationResultSchema = z
     contradictionPenalty: z.number().int().min(0),
     outcome: AccusationOutcomeSchema,
     missingCategories: z.array(NoteCategorySchema),
+    submittedNoteIds: z.array(z.string()),
     accusedCount: z.number().int().min(0),
   })
   .strict();

@@ -96,12 +96,14 @@ describe('AccusationResultScreen', () => {
         contradictionPenalty: 0,
         outcome: 'full',
         missingCategories: [],
+        submittedNoteIds: [],
         accusedCount: 2,
       },
     });
     render(<AccusationResultScreen />);
     expect(screen.getByText('Полное обвинение')).toBeInTheDocument();
-    expect(screen.getByText('5 / 5')).toBeInTheDocument();
+    // P18: dl со статистикой заменён на разбор «Работа над ошибками» (ADR-031)
+    expect(screen.getByText(/Работа над ошибками/)).toBeInTheDocument();
   });
 
   it('fail с missingCategories → показывает категории', () => {
@@ -114,6 +116,7 @@ describe('AccusationResultScreen', () => {
         contradictionPenalty: 0,
         outcome: 'fail',
         missingCategories: ['alibi', 'psychology', 'contradiction'],
+        submittedNoteIds: [],
         accusedCount: 1,
       },
     });
@@ -122,6 +125,28 @@ describe('AccusationResultScreen', () => {
     expect(screen.getByText('Алиби')).toBeInTheDocument();
     expect(screen.getByText('Психология')).toBeInTheDocument();
     expect(screen.getByText('Противоречие')).toBeInTheDocument();
+  });
+
+  it('показывает найденные и упущенные ключевые улики', () => {
+    useGameStore.setState({
+      lastAccusationResult: {
+        score: 5,
+        coverage: 5,
+        validCount: 5,
+        strongCount: 2,
+        contradictionPenalty: 0,
+        outcome: 'partial_high',
+        missingCategories: [],
+        submittedNoteIds: [],
+        accusedCount: 2,
+      },
+    });
+    render(<AccusationResultScreen />);
+    expect(screen.getByText(/Работа над ошибками/)).toBeInTheDocument();
+    expect(screen.getByText(/ключевых улик\./)).toBeInTheDocument();
+    // Ни одна ключевая улика не сдана — счётчик «Вы нашли 0 из N»
+    expect(screen.getByText('0')).toBeInTheDocument();
+    expect(screen.getByText(/Показать упущенные \(\d+\)/)).toBeInTheDocument();
   });
 
   it('Продолжить → currentScene = ch5_01', () => {
@@ -134,6 +159,7 @@ describe('AccusationResultScreen', () => {
         contradictionPenalty: 0,
         outcome: 'partial_high',
         missingCategories: [],
+        submittedNoteIds: [],
         accusedCount: 2,
       },
     });
@@ -156,6 +182,7 @@ describe('FinaleScreen', () => {
         contradictionPenalty: 0,
         outcome: 'full',
         missingCategories: [],
+        submittedNoteIds: [],
         accusedCount: 2,
       },
     });
