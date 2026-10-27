@@ -2,6 +2,7 @@ import { useGameStore } from './store';
 import { AudioProvider } from './audio/AudioProvider';
 import { MainMenuScreen } from './screens/MainMenuScreen';
 import { TutorialScreen } from './screens/TutorialScreen';
+import { HowToPlayScreen } from './screens/HowToPlayScreen';
 import { SceneScreen } from './screens/SceneScreen';
 import { AccusationScreen } from './screens/AccusationScreen';
 import { AccusationResultScreen } from './screens/AccusationResultScreen';
@@ -31,6 +32,8 @@ function renderScreen(screen: Screen) {
       return <MainMenuScreen />;
     case 'tutorial':
       return <TutorialScreen />;
+    case 'how_to_play':
+      return <HowToPlayScreen />;
     case 'scene':
       return <SceneScreen />;
     case 'notebook':

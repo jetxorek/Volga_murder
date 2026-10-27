@@ -4,6 +4,7 @@ import type { AccusationResult } from '../schemas/accusation';
 export type Screen =
   | 'main_menu'
   | 'tutorial'
+  | 'how_to_play'
   | 'scene'
   | 'notebook'
   | 'accusation'
