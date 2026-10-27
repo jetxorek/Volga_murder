@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { NoteLinkSchema, NoteSchema } from './note';
+import { PlayerConnectionSchema } from './connection';
 
 // SaveState — снимок прогресса. Только save-поля; UI-поля сюда не входят.
 // .strict() — защита от «забыл убрать UI-поле». Если кто-то добавит
@@ -37,6 +38,7 @@ export const SaveStateSchema = z
       })
       .strict()
       .nullable(),
+    connections: z.array(PlayerConnectionSchema).default([]),
     updatedAt: z.number().int().nonnegative(),
   })
   .strict();

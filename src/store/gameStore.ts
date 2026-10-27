@@ -3,6 +3,7 @@ import { persist, createJSONStorage, type StateStorage } from 'zustand/middlewar
 import type { SaveState } from '../schemas/saveState';
 import { SaveStateSchema } from '../schemas/saveState';
 import type { AccusationResult } from '../schemas/accusation';
+import type { ConnectionType } from '../schemas/connection';
 import { SCENE_GRAPH, SLOTS_CONFIG, START_SCENE, CHAPTER_START_SCENES } from '../data/sceneGraph';
 import { NOTE_MATRIX } from '../data/noteMatrix';
 import { enterScene, advanceNode, chooseOption as engineChooseOption } from '../engine/sceneOps';
@@ -39,6 +40,10 @@ export type StoreActions = {
   dismissDeath: () => void;
   /** Занести заметку в блокнот по ID из NOTE_MATRIX. */
   addNoteFromSpan: (noteSpanId: string) => void;
+  /** Добавить связь между персонажами. Дубликаты no-op. */
+  addConnection: (from: string, to: string, type: ConnectionType) => void;
+  /** Удалить связь по id. */
+  removeConnection: (id: string) => void;
   /** Отправить обвинение. Сохраняет результат в lastAccusationResult. */
   submitAccusation: (accused: string[], noteIds: string[]) => void;
   /** Использовать подсказку (увеличить счётчик). */
@@ -79,6 +84,8 @@ function makeInitialData(playerId: string): Store {
     notes: [],
     links: [],
     hintsUsed: { greyCells: 0, memoryTheater: 0, snowWindow: 0 },
+    // connections
+    connections: [],
     // meta
     version: 1,
     playerId,
@@ -346,6 +353,31 @@ export const useGameStore = create<FullStore>()(
         const note = createNote(span, state.currentScene, fromRiskyScene, Date.now());
         set({ notes: addNoteToList(state.notes, note), updatedAt: Date.now() });
         set({ toast: `Заметка добавлена: ${span.statement}` });
+      },
+
+      addConnection: (from, to, type) => {
+        if (from === to) return;
+        const state = get();
+        const exists = state.connections.some(
+          (c) =>
+            c.type === type &&
+            ((c.from === from && c.to === to) || (c.from === to && c.to === from)),
+        );
+        if (exists) return;
+        const conn = {
+          id: `conn_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+          from,
+          to,
+          type,
+        };
+        set({ connections: [...state.connections, conn], updatedAt: Date.now() });
+      },
+
+      removeConnection: (id) => {
+        set({
+          connections: get().connections.filter((c) => c.id !== id),
+          updatedAt: Date.now(),
+        });
       },
 
       submitAccusation: (accused, noteIds) => {

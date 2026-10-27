@@ -26,6 +26,7 @@ export function toSaveState(store: Store): SaveState {
     unlockedEndings: store.unlockedEndings,
     tutorialStepsSeen: store.tutorialStepsSeen,
     hubState: store.hubState,
+    connections: store.connections,
     updatedAt: store.updatedAt,
   };
 }
@@ -53,6 +54,7 @@ export function fromSaveState(save: SaveState): Partial<Store> {
     unlockedEndings: save.unlockedEndings,
     tutorialStepsSeen: save.tutorialStepsSeen,
     hubState: save.hubState,
+    connections: save.connections,
     updatedAt: save.updatedAt,
   };
 }
