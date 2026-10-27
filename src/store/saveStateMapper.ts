@@ -34,8 +34,10 @@ export function toSaveState(store: Store): SaveState {
 /**
  * Возвращает только save-поля для мерджа в стор при загрузке.
  * UI-поля НЕ возвращаются — они остаются со значениями по умолчанию.
+ * Параметр — Partial<SaveState>: старые сохранения из localStorage (до P16a)
+ * не содержат connections; ?? [] нормализует отсутствующие поля (P16a-fix).
  */
-export function fromSaveState(save: SaveState): Partial<Store> {
+export function fromSaveState(save: Partial<SaveState>): Partial<Store> {
   return {
     version: save.version,
     playerId: save.playerId,
@@ -54,7 +56,7 @@ export function fromSaveState(save: SaveState): Partial<Store> {
     unlockedEndings: save.unlockedEndings,
     tutorialStepsSeen: save.tutorialStepsSeen,
     hubState: save.hubState,
-    connections: save.connections,
+    connections: save.connections ?? [],
     updatedAt: save.updatedAt,
   };
 }
