@@ -167,9 +167,9 @@ describe('submitAccusation', () => {
   });
 });
 
-describe('useHint', () => {
+describe('triggerHint', () => {
   it('увеличивает счётчик, ставит toast', () => {
-    useGameStore.getState().useHint('greyCells');
+    useGameStore.getState().triggerHint('greyCells');
     const s = useGameStore.getState();
     expect(s.hintsUsed.greyCells).toBe(1);
     expect(s.toast).toContain('greyCells');
@@ -177,7 +177,7 @@ describe('useHint', () => {
 
   it('ironPoirot → console.error, счётчик не меняется', () => {
     useGameStore.setState({ ironPoirot: true });
-    useGameStore.getState().useHint('greyCells');
+    useGameStore.getState().triggerHint('greyCells');
     expect(useGameStore.getState().hintsUsed.greyCells).toBe(0);
   });
 });

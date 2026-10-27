@@ -55,9 +55,7 @@ export function AccusationResultScreen() {
         <dt>Очки:</dt>
         <dd style={{ margin: 0 }}>{result.score.toFixed(1)}</dd>
         <dt>Покрытие категорий:</dt>
-        <dd style={{ margin: 0 }}>
-          {result.coverage} / 5
-        </dd>
+        <dd style={{ margin: 0 }}>{result.coverage} / 5</dd>
         <dt>Верных заметок:</dt>
         <dd style={{ margin: 0 }}>{result.validCount}</dd>
         <dt>Сильных заметок:</dt>

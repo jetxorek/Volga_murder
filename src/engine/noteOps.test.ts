@@ -90,7 +90,7 @@ describe('addNoteToList', () => {
   it('иммутабельно: старый массив !== новый', () => {
     const span = noteMatrix['n_ch1_01_01'];
     const note = createNote(span, 'ch1_01', false, 1000);
-    const original: typeof note[] = [];
+    const original: (typeof note)[] = [];
     const result = addNoteToList(original, note);
     expect(original).not.toBe(result);
     expect(original).toHaveLength(0);

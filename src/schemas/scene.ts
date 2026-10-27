@@ -77,10 +77,9 @@ export const SceneNodeSchema = z
     CheckNodeSchema,
     EndNodeSchema,
   ])
-  .refine(
-    (v) => v.type !== 'end' || v.outcome !== 'continue' || Boolean(v.nextSceneId),
-    { message: 'nextSceneId обязателен при outcome=continue' },
-  );
+  .refine((v) => v.type !== 'end' || v.outcome !== 'continue' || Boolean(v.nextSceneId), {
+    message: 'nextSceneId обязателен при outcome=continue',
+  });
 export type SceneNode = z.infer<typeof SceneNodeSchema>;
 
 // HubConfig — конфигурация хаба (сцена с выбором нескольких опций).

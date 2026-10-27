@@ -22,12 +22,25 @@ describe('ProceduralBackground', () => {
 
   it('все 19 фонов рендерятся без ошибок', () => {
     const ids = [
-      'bg_embankment', 'bg_pier', 'bg_deck_evening', 'bg_deck_night',
-      'bg_salon', 'bg_salon_night', 'bg_salon_day',
-      'bg_cabin_simon', 'bg_cabin_lina', 'bg_cabin_jeanne',
-      'bg_cabin_vanskaya', 'bg_cabin_louise', 'bg_cabin_otterborn',
-      'bg_infirmary', 'bg_deck_day', 'bg_corridor', 'bg_court',
-      'bg_office', 'bg_credits',
+      'bg_embankment',
+      'bg_pier',
+      'bg_deck_evening',
+      'bg_deck_night',
+      'bg_salon',
+      'bg_salon_night',
+      'bg_salon_day',
+      'bg_cabin_simon',
+      'bg_cabin_lina',
+      'bg_cabin_jeanne',
+      'bg_cabin_vanskaya',
+      'bg_cabin_louise',
+      'bg_cabin_otterborn',
+      'bg_infirmary',
+      'bg_deck_day',
+      'bg_corridor',
+      'bg_court',
+      'bg_office',
+      'bg_credits',
     ];
     for (const id of ids) {
       const { unmount } = render(<ProceduralBackground backgroundId={id} />);

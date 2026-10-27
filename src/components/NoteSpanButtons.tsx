@@ -9,7 +9,7 @@ type NoteSpanButtonsProps = {
 export function NoteSpanButtons({ noteSpanIds }: NoteSpanButtonsProps) {
   const notes = useGameStore((s) => s.notes);
   const addNote = useGameStore((s) => s.addNoteFromSpan);
-  const matrix: Record<string, typeof NOTE_MATRIX[keyof typeof NOTE_MATRIX]> = NOTE_MATRIX;
+  const matrix: Record<string, (typeof NOTE_MATRIX)[keyof typeof NOTE_MATRIX]> = NOTE_MATRIX;
 
   if (noteSpanIds.length === 0) return null;
 

@@ -24,7 +24,7 @@ export const NOTE_MATRIX = {
   },
   n_ch1_01_03: {
     id: 'n_ch1_01_03',
-    text: 'Она привыкла, что всё будет по её',
+    text: 'привыкших, что всё будет по их',
     statement: 'Лина держится как хозяйка положения',
     category: 'psychology',
     target: 'char_04',
@@ -54,7 +54,7 @@ export const NOTE_MATRIX = {
   },
   n_ch1_02_03: {
     id: 'n_ch1_02_03',
-    text: 'Наследство',
+    text: 'запись о наследстве',
     statement: 'Обнаружено, что Симон наследует состояние Лины (документ)',
     category: 'motive',
     target: 'char_02',
@@ -94,7 +94,7 @@ export const NOTE_MATRIX = {
   },
   n_ch1_04_01: {
     id: 'n_ch1_04_01',
-    text: 'Я всё решила за нас двоих',
+    text: 'Я всё решила',
     statement: 'Жанна утверждает, что всё решила за двоих',
     category: 'motive',
     target: 'group',
@@ -126,7 +126,7 @@ export const NOTE_MATRIX = {
   // ─── Акт II ──────────────────────────────────────────────
   n_ch2_01_01: {
     id: 'n_ch2_01_01',
-    text: 'Жанна стояла с пистолетом',
+    text: 'стояла Жанна Бельская. В руке у неё был пистолет',
     statement: 'Пирогов видит Жанну с пистолетом в руке',
     category: 'opportunity',
     target: 'char_03',
@@ -146,7 +146,7 @@ export const NOTE_MATRIX = {
   },
   n_ch2_01_03: {
     id: 'n_ch2_01_03',
-    text: 'Она была в истерике',
+    text: 'Истерика выглядела так, как её изображают на сцене',
     statement: 'Пирогов замечает, что истерика Жанны наигранна',
     category: 'psychology',
     target: 'char_03',
@@ -156,7 +156,7 @@ export const NOTE_MATRIX = {
   },
   n_ch2_02a_01: {
     id: 'n_ch2_02a_01',
-    text: 'Письмо от Жанны',
+    text: 'лежало письмо',
     statement: 'Обнаружено письмо Жанны к Симону (документ)',
     category: 'motive',
     target: 'group',
@@ -166,7 +166,7 @@ export const NOTE_MATRIX = {
   },
   n_ch2_02a_02: {
     id: 'n_ch2_02a_02',
-    text: 'Поддельные жемчужины',
+    text: 'Жемчуг был поддельный',
     statement: 'Обнаружены поддельные жемчужины в шкатулке Лины',
     category: 'opportunity',
     target: 'char_08',
@@ -216,7 +216,7 @@ export const NOTE_MATRIX = {
   },
   n_ch2_02c_03: {
     id: 'n_ch2_02c_03',
-    text: 'Я читал в каюте',
+    text: 'У себя. Читал. Всю ночь.',
     statement: 'Пеньков утверждает, что читал в каюте',
     category: 'alibi',
     target: 'char_06',
@@ -246,7 +246,7 @@ export const NOTE_MATRIX = {
   },
   n_ch2_03_02: {
     id: 'n_ch2_03_02',
-    text: 'Он был у неё',
+    text: 'Кто был рядом с ней ночью?',
     statement: 'Пирогов замечает, что Симон был у каюты Лины',
     category: 'alibi',
     target: 'char_02',
@@ -256,7 +256,7 @@ export const NOTE_MATRIX = {
   },
   n_ch2_03_03: {
     id: 'n_ch2_03_03',
-    text: 'Она не спала',
+    text: '— Я не спала, — согласилась Жанна',
     statement: 'Пирогов замечает, что Жанна не спала ночью',
     category: 'opportunity',
     target: 'char_03',
@@ -296,7 +296,7 @@ export const NOTE_MATRIX = {
   },
   n_ch2_04_04: {
     id: 'n_ch2_04_04',
-    text: 'Я молилась',
+    text: 'Я молилась в своей каюте',
     statement: 'Ванская утверждает, что молилась в каюте',
     category: 'alibi',
     target: 'char_09',
@@ -339,7 +339,7 @@ export const NOTE_MATRIX = {
   },
   n_ch3_01b_02: {
     id: 'n_ch3_01b_02',
-    text: 'Она выходила',
+    text: 'Жанна выходила из каюты этой ночью',
     statement: 'Пирогов замечает, что Жанна выходила из каюты',
     category: 'alibi',
     target: 'char_03',
@@ -359,7 +359,7 @@ export const NOTE_MATRIX = {
   },
   n_ch3_01c_02: {
     id: 'n_ch3_01c_02',
-    text: 'Я спал',
+    text: 'Сначала я сказал, что спал',
     statement: 'Доктор Бреннер сначала утверждал, что спал',
     category: 'alibi',
     target: 'char_10',
@@ -379,7 +379,7 @@ export const NOTE_MATRIX = {
   },
   n_ch3_02_01: {
     id: 'n_ch3_02_01',
-    text: 'Она шла к каюте Симона',
+    text: 'Она подошла к каюте Симона',
     statement: 'Пирогов видит, как Жанна идёт к каюте Симона',
     category: 'alibi',
     target: 'char_03',
@@ -389,7 +389,7 @@ export const NOTE_MATRIX = {
   },
   n_ch3_02_02: {
     id: 'n_ch3_02_02',
-    text: 'Он прятал что-то в пальто',
+    text: 'что-то прятал в пальто',
     statement: 'Пирогов замечает, что Аллертон прячет что-то в пальто',
     category: 'opportunity',
     target: 'char_08',
@@ -399,7 +399,7 @@ export const NOTE_MATRIX = {
   },
   n_ch3_03_01: {
     id: 'n_ch3_03_01',
-    text: 'Она знала слишком много',
+    text: 'она знала слишком много',
     statement: 'Пирогов замечает, что Луиза знала слишком много',
     category: 'psychology',
     target: 'char_05',
@@ -409,7 +409,7 @@ export const NOTE_MATRIX = {
   },
   n_ch3_03_02: {
     id: 'n_ch3_03_02',
-    text: 'Луиза видела Симона',
+    text: 'Луиза видела. Луиза знает.',
     statement: 'Обнаружено, что Луиза видела Симона у каюты Лины',
     category: 'opportunity',
     target: 'char_05',
@@ -429,7 +429,7 @@ export const NOTE_MATRIX = {
   },
   n_ch3_04b_01: {
     id: 'n_ch3_04b_01',
-    text: 'Записка от Жанны',
+    text: 'Под подушкой Пирогов нашёл записку',
     statement: 'Обнаружена записка Жанны к Луизе (документ)',
     category: 'opportunity',
     target: 'char_03',
@@ -481,7 +481,7 @@ export const NOTE_MATRIX = {
   },
   n_ch4_01a_04: {
     id: 'n_ch4_01a_04',
-    text: 'Противоречие: Аллертон',
+    text: 'замечает противоречие в словах Аллертона',
     statement:
       'Пирогов замечает противоречие: Аллертон отрицает интерес к деньгам, но у него долги',
     category: 'contradiction',
@@ -512,7 +512,7 @@ export const NOTE_MATRIX = {
   },
   n_ch4_01b_03: {
     id: 'n_ch4_01b_03',
-    text: 'Поведение клептоманки',
+    text: 'замечает поведение клептоманки',
     statement: 'Пирогов замечает поведение клептоманки у Ванской',
     category: 'psychology',
     target: 'char_09',
@@ -522,7 +522,7 @@ export const NOTE_MATRIX = {
   },
   n_ch4_01b_04: {
     id: 'n_ch4_01b_04',
-    text: 'Противоречие: Ванская',
+    text: 'поведение противоречат друг другу',
     statement: 'Пирогов замечает противоречие: Ванская отрицает кражу, но поведение выдаёт её',
     category: 'contradiction',
     target: 'char_09',
@@ -562,7 +562,7 @@ export const NOTE_MATRIX = {
   },
   n_ch4_02_02: {
     id: 'n_ch4_02_02',
-    text: 'Запись в блокноте',
+    text: 'В её блокноте — запись',
     statement: 'Обнаружен блокнот миссис Оттерборн с записью (документ)',
     category: 'opportunity',
     target: 'char_03',
@@ -582,7 +582,7 @@ export const NOTE_MATRIX = {
   },
   n_ch4_03_02: {
     id: 'n_ch4_03_02',
-    text: 'Он был у неё',
+    text: 'Симон был у каюты Лины',
     statement: 'Пирогов замечает, что Симон был у каюты Лины',
     category: 'alibi',
     target: 'char_02',
@@ -594,7 +594,7 @@ export const NOTE_MATRIX = {
   // ─── Акт V ───────────────────────────────────────────────
   n_ch5_01_01: {
     id: 'n_ch5_01_01',
-    text: 'Второй пистолет',
+    text: 'второй пистолет',
     statement: 'Пирогов обнаруживает второй пистолет (документ)',
     category: 'opportunity',
     target: 'char_03',
@@ -626,7 +626,7 @@ export const NOTE_MATRIX = {
   // ─── Ложные следы в обязательных сценах (P6.6) ──────────
   n_ch1_04_04: {
     id: 'n_ch1_04_04',
-    text: 'Пеньков избегает смотреть на Лину',
+    text: 'Пеньков избегал смотреть на Лину',
     statement: 'Пирогов замечает, что Пеньков избегает смотреть на Лину',
     category: 'psychology',
     target: 'char_06',
@@ -646,7 +646,7 @@ export const NOTE_MATRIX = {
   },
   n_ch2_03_05: {
     id: 'n_ch2_03_05',
-    text: 'Аллертон держал руки в карманах',
+    text: 'Руки он держал в карманах',
     statement: 'Пирогов замечает, что Аллертон держит руки в карманах',
     category: 'psychology',
     target: 'char_08',
@@ -656,7 +656,7 @@ export const NOTE_MATRIX = {
   },
   n_ch3_03_03: {
     id: 'n_ch3_03_03',
-    text: 'Бреннер констатировал смерть без эмоций',
+    text: 'Он сказал это ровно, без запинки',
     statement: 'Пирогов замечает, что Бреннер констатирует смерть без эмоций',
     category: 'psychology',
     target: 'char_10',
@@ -666,7 +666,7 @@ export const NOTE_MATRIX = {
   },
   n_ch4_02_03: {
     id: 'n_ch4_02_03',
-    text: 'Ванская крестилась у двери',
+    text: 'Она крестилась — мелко, часто',
     statement: 'Пирогов замечает, что Ванская крестится у двери',
     category: 'psychology',
     target: 'char_09',
@@ -676,7 +676,7 @@ export const NOTE_MATRIX = {
   },
   n_ch4_03_03: {
     id: 'n_ch4_03_03',
-    text: 'Пеньков не смотрел на Симона',
+    text: 'смотрел не на Симона — в пол',
     statement: 'Пирогов замечает, что Пеньков не смотрит на Симона',
     category: 'psychology',
     target: 'char_06',
@@ -686,7 +686,7 @@ export const NOTE_MATRIX = {
   },
   n_ch4_03_04: {
     id: 'n_ch4_03_04',
-    text: 'Аллертон нервно вертел монету',
+    text: 'нервно вертел в пальцах монету',
     statement: 'Пирогов замечает, что Аллертон нервно вертит монету',
     category: 'psychology',
     target: 'char_08',

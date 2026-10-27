@@ -6,9 +6,7 @@ import type { SaveState } from '../schemas/saveState';
  * ok — выбор принят; state обновлён (picked += subId, remaining -= 1).
  * invalid — выбор отклонён (причина в reason).
  */
-export type HubPickResult =
-  | { kind: 'ok'; state: SaveState }
-  | { kind: 'invalid'; reason: string };
+export type HubPickResult = { kind: 'ok'; state: SaveState } | { kind: 'invalid'; reason: string };
 
 /**
  * Игрок выбрал под-сцену в hub. Проверяет: hubState соответствует

@@ -196,7 +196,10 @@ describe('SettingsScreen', () => {
 
   it('«Сбросить прогресс» с confirm → resetStore, currentScene = ""', () => {
     useGameStore.getState().enterSceneById('ch1_01');
-    vi.stubGlobal('confirm', vi.fn(() => true));
+    vi.stubGlobal(
+      'confirm',
+      vi.fn(() => true),
+    );
     render(<SettingsScreen />);
     screen.getByText('Сбросить прогресс').click();
     expect(useGameStore.getState().currentScene).toBe('');
@@ -205,7 +208,10 @@ describe('SettingsScreen', () => {
 
   it('«Сбросить прогресс» с отменой → no-op', () => {
     useGameStore.getState().enterSceneById('ch1_01');
-    vi.stubGlobal('confirm', vi.fn(() => false));
+    vi.stubGlobal(
+      'confirm',
+      vi.fn(() => false),
+    );
     render(<SettingsScreen />);
     screen.getByText('Сбросить прогресс').click();
     expect(useGameStore.getState().currentScene).toBe('ch1_01');

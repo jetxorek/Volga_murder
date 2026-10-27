@@ -23,32 +23,64 @@ export function ProceduralBackground({ backgroundId }: ProceduralBackgroundProps
 
 function renderScene(id: string) {
   switch (id) {
-    case 'bg_embankment':   return <Embankment />;
-    case 'bg_pier':         return <Pier />;
-    case 'bg_deck_evening': return <DeckEvening />;
-    case 'bg_deck_night':   return <DeckNight />;
-    case 'bg_salon':        return <Salon night={false} day={false} />;
-    case 'bg_salon_night':  return <Salon night day={false} />;
-    case 'bg_salon_day':    return <Salon night={false} day />;
-    case 'bg_cabin_simon':  return <CabinSimon />;
-    case 'bg_cabin_lina':   return <CabinLina />;
-    case 'bg_cabin_jeanne': return <CabinJeanne />;
-    case 'bg_cabin_vanskaya': return <CabinVanskaya />;
-    case 'bg_cabin_louise': return <CabinLouise />;
-    case 'bg_cabin_otterborn': return <CabinOtterborn />;
-    case 'bg_infirmary':    return <Infirmary />;
-    case 'bg_deck_day':     return <DeckDay />;
-    case 'bg_corridor':     return <Corridor />;
-    case 'bg_court':        return <Court />;
-    case 'bg_office':       return <Office />;
-    case 'bg_credits':      return <Credits />;
-    default:                return <DefaultScene />;
+    case 'bg_embankment':
+      return <Embankment />;
+    case 'bg_pier':
+      return <Pier />;
+    case 'bg_deck_evening':
+      return <DeckEvening />;
+    case 'bg_deck_night':
+      return <DeckNight />;
+    case 'bg_salon':
+      return <Salon night={false} day={false} />;
+    case 'bg_salon_night':
+      return <Salon night day={false} />;
+    case 'bg_salon_day':
+      return <Salon night={false} day />;
+    case 'bg_cabin_simon':
+      return <CabinSimon />;
+    case 'bg_cabin_lina':
+      return <CabinLina />;
+    case 'bg_cabin_jeanne':
+      return <CabinJeanne />;
+    case 'bg_cabin_vanskaya':
+      return <CabinVanskaya />;
+    case 'bg_cabin_louise':
+      return <CabinLouise />;
+    case 'bg_cabin_otterborn':
+      return <CabinOtterborn />;
+    case 'bg_infirmary':
+      return <Infirmary />;
+    case 'bg_deck_day':
+      return <DeckDay />;
+    case 'bg_corridor':
+      return <Corridor />;
+    case 'bg_court':
+      return <Court />;
+    case 'bg_office':
+      return <Office />;
+    case 'bg_credits':
+      return <Credits />;
+    default:
+      return <DefaultScene />;
   }
 }
 
 /* ── Общие приёмы: туман — rgba(255,255,255,…) / rgba(0,0,0,…), остальное — var(--color-*) ── */
 
-function Mist({ cx, cy, rx, ry, opacity = 0.06 }: { cx: number; cy: number; rx: number; ry: number; opacity?: number }) {
+function Mist({
+  cx,
+  cy,
+  rx,
+  ry,
+  opacity = 0.06,
+}: {
+  cx: number;
+  cy: number;
+  rx: number;
+  ry: number;
+  opacity?: number;
+}) {
   return <ellipse cx={cx} cy={cy} rx={rx} ry={ry} fill="#e8e6e1" opacity={opacity} />;
 }
 
@@ -182,11 +214,42 @@ function Salon({ night, day }: { night: boolean; day: boolean }) {
       <rect x="80" y="100" width="160" height="180" fill={windowFill} />
       <rect x="320" y="100" width="160" height="180" fill={windowFill} />
       <rect x="560" y="100" width="160" height="180" fill={windowFill} />
-      <rect x="80" y="100" width="160" height="180" fill="none" stroke="var(--color-border)" strokeWidth="4" />
-      <rect x="320" y="100" width="160" height="180" fill="none" stroke="var(--color-border)" strokeWidth="4" />
-      <rect x="560" y="100" width="160" height="180" fill="none" stroke="var(--color-border)" strokeWidth="4" />
+      <rect
+        x="80"
+        y="100"
+        width="160"
+        height="180"
+        fill="none"
+        stroke="var(--color-border)"
+        strokeWidth="4"
+      />
+      <rect
+        x="320"
+        y="100"
+        width="160"
+        height="180"
+        fill="none"
+        stroke="var(--color-border)"
+        strokeWidth="4"
+      />
+      <rect
+        x="560"
+        y="100"
+        width="160"
+        height="180"
+        fill="none"
+        stroke="var(--color-border)"
+        strokeWidth="4"
+      />
       <ellipse cx="400" cy="40" rx="50" ry="10" fill="var(--color-accent)" opacity={lampOpacity} />
-      <ellipse cx="400" cy="40" rx="90" ry="20" fill="var(--color-accent)" opacity={lampOpacity / 4} />
+      <ellipse
+        cx="400"
+        cy="40"
+        rx="90"
+        ry="20"
+        fill="var(--color-accent)"
+        opacity={lampOpacity / 4}
+      />
       <rect x="120" y="300" width="80" height="70" fill="#0a0608" />
       <rect x="360" y="300" width="80" height="70" fill="#0a0608" />
       <rect x="600" y="300" width="80" height="70" fill="#0a0608" />
@@ -232,7 +295,16 @@ function CabinLina() {
       {/* Туалетный столик */}
       <rect x="500" y="230" width="150" height="110" fill="#0f0a0d" />
       <rect x="520" y="120" width="110" height="110" fill="#2a3242" opacity="0.5" />
-      <rect x="520" y="120" width="110" height="110" fill="none" stroke="var(--color-accent)" strokeWidth="3" opacity="0.5" />
+      <rect
+        x="520"
+        y="120"
+        width="110"
+        height="110"
+        fill="none"
+        stroke="var(--color-accent)"
+        strokeWidth="3"
+        opacity="0.5"
+      />
       {/* Шкатулка */}
       <rect x="530" y="250" width="60" height="36" fill="#3a1e2a" />
       <rect x="530" y="262" width="60" height="4" fill="var(--color-accent)" opacity="0.5" />
@@ -251,7 +323,15 @@ function CabinJeanne() {
       <rect y="360" width="800" height="90" fill="#0a0b10" />
       {/* Окно со шторой */}
       <rect x="520" y="90" width="150" height="170" fill="#1a2434" />
-      <rect x="520" y="90" width="150" height="170" fill="none" stroke="var(--color-border)" strokeWidth="4" />
+      <rect
+        x="520"
+        y="90"
+        width="150"
+        height="170"
+        fill="none"
+        stroke="var(--color-border)"
+        strokeWidth="4"
+      />
       <polygon points="500,80 560,80 540,300 500,300" fill="#181c26" />
       {/* Койка */}
       <rect x="70" y="260" width="280" height="28" fill="#0c0d12" />
@@ -354,7 +434,15 @@ function Infirmary() {
       <rect x="132" y="232" width="80" height="20" fill="#1b201e" />
       {/* Шкаф с медикаментами */}
       <rect x="560" y="140" width="150" height="220" fill="#0c0f0e" />
-      <rect x="560" y="140" width="150" height="220" fill="none" stroke="var(--color-border)" strokeWidth="4" />
+      <rect
+        x="560"
+        y="140"
+        width="150"
+        height="220"
+        fill="none"
+        stroke="var(--color-border)"
+        strokeWidth="4"
+      />
       <rect x="560" y="250" width="150" height="4" fill="var(--color-border)" opacity="0.5" />
       <rect x="586" y="170" width="18" height="44" fill="#18222a" />
       <rect x="616" y="180" width="18" height="34" fill="#22182a" opacity="0.8" />
@@ -447,7 +535,15 @@ function Office() {
       <rect y="370" width="800" height="80" fill="#0a0b0c" />
       {/* Окно со шторами */}
       <rect x="520" y="80" width="180" height="200" fill="#1c2430" />
-      <rect x="520" y="80" width="180" height="200" fill="none" stroke="var(--color-border)" strokeWidth="5" />
+      <rect
+        x="520"
+        y="80"
+        width="180"
+        height="200"
+        fill="none"
+        stroke="var(--color-border)"
+        strokeWidth="5"
+      />
       <rect x="500" y="70" width="30" height="230" fill="#15161a" />
       <rect x="690" y="70" width="30" height="230" fill="#15161a" />
       {/* Писательский стол */}

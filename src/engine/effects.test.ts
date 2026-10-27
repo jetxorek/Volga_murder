@@ -51,15 +51,21 @@ describe('evaluateCondition', () => {
   });
 
   it('trustBelow char_02 value 3, current 2 → true', () => {
-    expect(evaluateCondition(baseState, { trustBelow: { charId: 'char_02', value: 3 } })).toBe(true);
+    expect(evaluateCondition(baseState, { trustBelow: { charId: 'char_02', value: 3 } })).toBe(
+      true,
+    );
   });
 
   it('trustBelow char_02 value 2, current 2 → false', () => {
-    expect(evaluateCondition(baseState, { trustBelow: { charId: 'char_02', value: 2 } })).toBe(false);
+    expect(evaluateCondition(baseState, { trustBelow: { charId: 'char_02', value: 2 } })).toBe(
+      false,
+    );
   });
 
   it('trustBelow отсутствующего charId → current 0, value 1 → true', () => {
-    expect(evaluateCondition(baseState, { trustBelow: { charId: 'char_99', value: 1 } })).toBe(true);
+    expect(evaluateCondition(baseState, { trustBelow: { charId: 'char_99', value: 1 } })).toBe(
+      true,
+    );
   });
 
   it('hasNoteIds: n1, есть → true', () => {

@@ -46,13 +46,21 @@ export const TRUTH_TABLE: TruthTable = {
   char_06: {
     motive: { embezzled_money: 'true' },
     alibi: { reading_in_cabin: 'true' },
-    psychology: { denies_embezzlement: 'false', fears_exposure: 'plausible', avoids_looking_at_simon: 'true' },
+    psychology: {
+      denies_embezzlement: 'false',
+      fears_exposure: 'plausible',
+      avoids_looking_at_simon: 'true',
+    },
   },
   char_08: {
     motive: { has_debts: 'true' },
     opportunity: { access_to_pearls: 'true', was_near_pearls: 'true' },
     alibi: { on_deck_smoking: 'false', was_near_pearls: 'true' },
-    psychology: { claims_no_interest_in_money: 'false', financially_desperate: 'true', hides_hands_in_pockets: 'true' },
+    psychology: {
+      claims_no_interest_in_money: 'false',
+      financially_desperate: 'true',
+      hides_hands_in_pockets: 'true',
+    },
     contradiction: { theft_denial_contradicted: 'true' },
   },
   char_09: {

@@ -26,7 +26,7 @@ const HINTS: Array<{ type: HintType; label: string; question: string }> = [
 export function HintsOverlay() {
   const hintsUsed = useGameStore((s) => s.hintsUsed);
   const ironPoirot = useGameStore((s) => s.ironPoirot);
-  const useHint = useGameStore((s) => s.useHint);
+  const triggerHint = useGameStore((s) => s.triggerHint);
   const setOverlay = useGameStore((s) => s.setOverlay);
 
   const totalUsed = hintsUsed.greyCells + hintsUsed.memoryTheater + hintsUsed.snowWindow;
@@ -54,7 +54,7 @@ export function HintsOverlay() {
               }}
             >
               <button
-                onClick={() => useHint(hint.type)}
+                onClick={() => triggerHint(hint.type)}
                 disabled={disabled || used}
                 style={{ width: '100%', textAlign: 'left' }}
               >

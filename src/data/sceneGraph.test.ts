@@ -131,10 +131,7 @@ describe('sceneGraph: ссылочная целостность', () => {
 describe('sceneGraph: hub и router', () => {
   const hubScenes = scenes.filter((s) => s.hubConfig);
   const routerScenes = scenes.filter(
-    (s) =>
-      !s.hubConfig &&
-      Object.values(s.nodes)[0]?.type === 'choice' &&
-      s.slotCost === 0,
+    (s) => !s.hubConfig && Object.values(s.nodes)[0]?.type === 'choice' && s.slotCost === 0,
   );
 
   it('hub-сцены имеют slotCost=0', () => {
@@ -189,10 +186,7 @@ describe('sceneGraph: достижимость', () => {
         }
         return false;
       });
-      expect(
-        hasExit,
-        `сцена ${scene.id} не имеет выхода (end или choice→nextSceneId)`,
-      ).toBe(true);
+      expect(hasExit, `сцена ${scene.id} не имеет выхода (end или choice→nextSceneId)`).toBe(true);
     }
   });
 });
