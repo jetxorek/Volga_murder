@@ -22,6 +22,7 @@ const makeState = (overrides: Partial<SaveState> = {}): SaveState => ({
   unlockedEndings: [],
   tutorialStepsSeen: [],
   hubState: null,
+  connections: [],
   updatedAt: 0,
   ...overrides,
 });

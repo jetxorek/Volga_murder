@@ -1,5 +1,6 @@
 import type { Note, NoteLink } from '../schemas/note';
 import type { AccusationResult } from '../schemas/accusation';
+import type { PlayerConnection } from '../schemas/connection';
 
 export type Screen =
   | 'main_menu'
@@ -79,5 +80,15 @@ export type UiSlice = {
   audioVolume: number; // 0..1
 };
 
-/** Полный стор = 5 слайсов. Экшены — в P4b. */
-export type Store = ProgressSlice & RelationshipsSlice & NotebookSlice & MetaSlice & UiSlice;
+/** Слайс connections: связи, созданные игроком. */
+export type ConnectionsSlice = {
+  connections: PlayerConnection[];
+};
+
+/** Полный стор = 6 слайсов. Экшены — в P4b. */
+export type Store = ProgressSlice &
+  RelationshipsSlice &
+  NotebookSlice &
+  MetaSlice &
+  UiSlice &
+  ConnectionsSlice;

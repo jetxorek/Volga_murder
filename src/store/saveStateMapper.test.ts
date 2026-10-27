@@ -43,6 +43,7 @@ const makeFullStore = (overrides: Partial<Store> = {}): Store => ({
   deathsInChapter: 1,
   unlockedEndings: ['ending_law'],
   tutorialStepsSeen: ['welcome'],
+  connections: [],
   updatedAt: 1234567890,
   // ui
   screen: 'scene',
