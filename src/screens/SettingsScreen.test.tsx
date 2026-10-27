@@ -70,6 +70,7 @@ describe('SettingsScreen: режим', () => {
 describe('SettingsScreen: прогресс', () => {
   it('«Начать заново» с confirm → resetStore + startNewGame', () => {
     useGameStore.getState().enterSceneById('ch1_01');
+    useGameStore.setState({ tutorialStepsSeen: ['welcome'] });
     vi.stubGlobal(
       'confirm',
       vi.fn(() => true),

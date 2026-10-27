@@ -1,6 +1,7 @@
 import { useGameStore } from './store';
 import { AudioProvider } from './audio/AudioProvider';
 import { MainMenuScreen } from './screens/MainMenuScreen';
+import { TutorialScreen } from './screens/TutorialScreen';
 import { SceneScreen } from './screens/SceneScreen';
 import { AccusationScreen } from './screens/AccusationScreen';
 import { AccusationResultScreen } from './screens/AccusationResultScreen';
@@ -28,6 +29,8 @@ function renderScreen(screen: Screen) {
   switch (screen) {
     case 'main_menu':
       return <MainMenuScreen />;
+    case 'tutorial':
+      return <TutorialScreen />;
     case 'scene':
       return <SceneScreen />;
     case 'notebook':

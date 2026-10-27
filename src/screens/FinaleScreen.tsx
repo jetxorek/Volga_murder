@@ -14,11 +14,9 @@ export function FinaleScreen() {
   const notes = useGameStore((s) => s.notes);
   const deaths = useGameStore((s) => s.deaths);
   const setScreen = useGameStore((s) => s.setScreen);
-  const resetStore = useGameStore((s) => s.resetStore);
   const startNewGame = useGameStore((s) => s.startNewGame);
 
   const onRestart = () => {
-    resetStore();
     startNewGame();
   };
 
