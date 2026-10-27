@@ -40,6 +40,12 @@ export type StoreActions = {
   dismissDeath: () => void;
   /** Занести заметку в блокнот по ID из NOTE_MATRIX. */
   addNoteFromSpan: (noteSpanId: string) => void;
+  /** Переключить метку «важное». */
+  toggleNoteImportant: (noteId: string) => void;
+  /** Переключить метку «отброшено». */
+  toggleNoteDiscarded: (noteId: string) => void;
+  /** Добавить личную заметку вручную. */
+  addPersonalNote: (text: string) => void;
   /** Добавить связь между персонажами. Дубликаты no-op. */
   addConnection: (from: string, to: string, type: ConnectionType) => void;
   /** Удалить связь по id. */
@@ -353,6 +359,51 @@ export const useGameStore = create<FullStore>()(
         const note = createNote(span, state.currentScene, fromRiskyScene, Date.now());
         set({ notes: addNoteToList(state.notes, note), updatedAt: Date.now() });
         set({ toast: `Заметка добавлена: ${span.statement}` });
+      },
+
+      toggleNoteImportant: (noteId) => {
+        set({
+          notes: get().notes.map((n) => (n.id === noteId ? { ...n, important: !n.important } : n)),
+          updatedAt: Date.now(),
+        });
+      },
+
+      toggleNoteDiscarded: (noteId) => {
+        set({
+          notes: get().notes.map((n) => (n.id === noteId ? { ...n, discarded: !n.discarded } : n)),
+          updatedAt: Date.now(),
+        });
+      },
+
+      addPersonalNote: (text) => {
+        const state = get();
+        const trimmed = text.trim();
+        if (trimmed.length < 5) return;
+        if (state.notes.some((n) => n.isPersonal === true && n.text === trimmed)) return;
+        const personalId = `personal_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`;
+        set({
+          notes: [
+            ...state.notes,
+            {
+              id: personalId,
+              text: trimmed,
+              statement: trimmed,
+              category: 'psychology' as const,
+              target: 'hint',
+              attributedTo: 'detective',
+              evidenceType: 'observation' as const,
+              truthKey: 'personal',
+              sourceScene: state.currentScene,
+              truth: 'plausible' as const,
+              strength: 'weak' as const,
+              fromRiskyScene: false,
+              createdAt: Date.now(),
+              isPersonal: true,
+            },
+          ],
+          updatedAt: Date.now(),
+          toast: 'Личная заметка добавлена',
+        });
       },
 
       addConnection: (from, to, type) => {

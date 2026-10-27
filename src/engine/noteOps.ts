@@ -67,6 +67,8 @@ export function createNote(
     strength,
     fromRiskyScene,
     createdAt,
+    important: false,
+    discarded: false,
   };
 }
 

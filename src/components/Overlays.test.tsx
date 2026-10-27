@@ -197,3 +197,54 @@ describe('CharacterMapOverlay', () => {
     expect(useGameStore.getState().connections.length).toBe(0);
   });
 });
+
+describe('NotebookOverlay (ADR-030)', () => {
+  const makeWeakNote = (): Note => ({
+    ...makeNote(),
+    id: 'n_weak_1',
+    statement: 'Слабая зацепка о Пирогове',
+    target: 'char_01',
+    truth: 'plausible',
+    strength: 'weak',
+  });
+
+  it('переключатель режимов присутствует, по умолчанию «По категориям»', () => {
+    useGameStore.setState({ overlay: 'notebook', notes: [makeNote()] });
+    render(<Overlays />);
+    expect(screen.getByRole('button', { name: 'По категориям' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+    expect(screen.getByRole('button', { name: 'По персонажам' })).toHaveAttribute(
+      'aria-pressed',
+      'false',
+    );
+  });
+
+  it('«По персонажам» → группировка по target (имя персонажа)', () => {
+    useGameStore.setState({ overlay: 'notebook', notes: [makeNote()] });
+    render(<Overlays />);
+    fireEvent.click(screen.getByRole('button', { name: 'По персонажам' }));
+    // target char_02 = Симон Долин — секция с именем цели, а не «Мотив»
+    expect(screen.getByText(/Симон Долин \(1\)/)).toBeInTheDocument();
+    expect(screen.queryByText(/Мотив \(1\)/)).not.toBeInTheDocument();
+  });
+
+  it('в режиме «По категориям» — секция категории', () => {
+    useGameStore.setState({ overlay: 'notebook', notes: [makeNote()] });
+    render(<Overlays />);
+    expect(screen.getByText(/Мотив \(1\)/)).toBeInTheDocument();
+  });
+
+  it('счётчик ключевых улик: strong+true учитывается, weak — нет', () => {
+    useGameStore.setState({ overlay: 'notebook', notes: [makeNote(), makeWeakNote()] });
+    render(<Overlays />);
+    expect(screen.getByText(/Ключевых улик: 1 из \d+/)).toBeInTheDocument();
+  });
+
+  it('пустой блокнот → счётчик 0', () => {
+    useGameStore.setState({ overlay: 'notebook', notes: [] });
+    render(<Overlays />);
+    expect(screen.getByText(/Ключевых улик: 0 из \d+/)).toBeInTheDocument();
+  });
+});

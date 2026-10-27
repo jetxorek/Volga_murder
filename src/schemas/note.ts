@@ -32,6 +32,11 @@ export const NoteSchema = NoteSpanSchema.extend({
   strength: NoteStrengthSchema,
   fromRiskyScene: z.boolean(),
   createdAt: z.number().int().nonnegative(),
+  important: z.boolean().optional(),
+  discarded: z.boolean().optional(),
+  // Личная заметка, введённая игроком вручную (P13c). У таких заметок
+  // нет span-прототипа; метки ★/✕ к ним не применяются.
+  isPersonal: z.boolean().optional(),
 });
 export type Note = z.infer<typeof NoteSchema>;
 
