@@ -14,7 +14,7 @@ export type Screen =
   | 'settings';
 
 export type Overlay =
-  'none' | 'notebook' | 'character_card' | 'hints' | 'chapter_summary' | 'death';
+  'none' | 'notebook' | 'character_card' | 'character_map' | 'hints' | 'chapter_summary' | 'death';
 
 export type HubState = {
   sceneId: string;

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { ActionBar } from './ActionBar';
 import { useGameStore } from '../store';
 
@@ -10,8 +10,14 @@ beforeEach(() => {
 describe('ActionBar', () => {
   it('Блокнот → setOverlay("notebook")', () => {
     render(<ActionBar />);
-    screen.getByText('Блокнот').click();
+    fireEvent.click(screen.getByText(/Блокнот/));
     expect(useGameStore.getState().overlay).toBe('notebook');
+  });
+
+  it('Схема → setOverlay("character_map")', () => {
+    render(<ActionBar />);
+    fireEvent.click(screen.getByText('Схема'));
+    expect(useGameStore.getState().overlay).toBe('character_map');
   });
 
   it('Подсказки → setOverlay("hints")', () => {

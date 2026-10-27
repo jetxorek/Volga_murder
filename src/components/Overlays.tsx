@@ -4,6 +4,7 @@ import { CharacterCardOverlay } from './overlays/CharacterCardOverlay';
 import { HintsOverlay } from './overlays/HintsOverlay';
 import { DeathOverlay } from './overlays/DeathOverlay';
 import { ChapterSummaryOverlay } from './overlays/ChapterSummaryOverlay';
+import { CharacterMapOverlay } from './overlays/CharacterMapOverlay';
 
 /** Роутер overlays: рендерит нужный по store.overlay. */
 export function Overlays() {
@@ -16,6 +17,8 @@ export function Overlays() {
       return <NotebookOverlay />;
     case 'character_card':
       return <CharacterCardOverlay />;
+    case 'character_map':
+      return <CharacterMapOverlay />;
     case 'hints':
       return <HintsOverlay />;
     case 'death':

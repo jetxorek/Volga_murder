@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Overlays } from './Overlays';
 import { useGameStore } from '../store';
 import type { Note } from '../schemas/note';
@@ -155,5 +155,45 @@ describe('Overlays: роутер', () => {
     useGameStore.setState({ overlay: 'none' });
     const { container } = render(<Overlays />);
     expect(container.firstChild).toBeNull();
+  });
+});
+
+describe('CharacterMapOverlay', () => {
+  it('рендерит 10 аватаров и заголовок', () => {
+    useGameStore.setState({ overlay: 'character_map', connections: [] });
+    render(<Overlays />);
+    expect(screen.getByText('Схема персонажей')).toBeInTheDocument();
+    expect(screen.getByLabelText('Эрнест Пирогов')).toBeInTheDocument();
+    expect(screen.getByLabelText('Симон Долин')).toBeInTheDocument();
+    expect(screen.getByLabelText('Лина Долина')).toBeInTheDocument();
+  });
+
+  it('создание связи: клик на двоих → выбор типа → связь в списке', () => {
+    useGameStore.setState({ overlay: 'character_map', connections: [] });
+    render(<Overlays />);
+    fireEvent.click(screen.getByLabelText('Симон Долин'));
+    fireEvent.click(screen.getByLabelText('Жанна Бельская'));
+
+    // Диалог появился
+    expect(screen.getByText(/Связь:/)).toBeInTheDocument();
+    const select = screen.getByLabelText('Тип связи');
+    fireEvent.change(select, { target: { value: 'love' } });
+
+    fireEvent.click(screen.getByText('Связать'));
+    expect(useGameStore.getState().connections.length).toBe(1);
+    expect(useGameStore.getState().connections[0].type).toBe('love');
+    // Диалог закрыт после создания связи.
+    expect(screen.queryByLabelText('Тип связи')).not.toBeInTheDocument();
+  });
+
+  it('удаление связи', () => {
+    useGameStore.setState({
+      overlay: 'character_map',
+      connections: [{ id: 'c1', from: 'char_02', to: 'char_03', type: 'love' }],
+    });
+    render(<Overlays />);
+    expect(screen.getByText(/Долин — Бельская/)).toBeInTheDocument();
+    fireEvent.click(screen.getByLabelText('Удалить связь: Долин — Бельская'));
+    expect(useGameStore.getState().connections.length).toBe(0);
   });
 });

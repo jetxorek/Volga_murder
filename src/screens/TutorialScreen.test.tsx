@@ -28,11 +28,20 @@ describe('TutorialScreen', () => {
 
   it('на последней — «Начать расследование», finish → scene', () => {
     render(<TutorialScreen />);
-    for (let i = 0; i < 3; i++) fireEvent.click(screen.getByText('Далее'));
+    // Цикл < 4: 5 карточек, «Далее» нажимается 4 раза до последней.
+    for (let i = 0; i < 4; i++) fireEvent.click(screen.getByText('Далее'));
+    // 5-я, последняя — «Обвиняй»; 4-я «Строй схему.» пройдена на шаге цикла.
+    expect(screen.getByText('Обвиняй. Когда будешь готов.')).toBeInTheDocument();
     expect(screen.getByText('Начать расследование')).toBeInTheDocument();
     fireEvent.click(screen.getByText('Начать расследование'));
     expect(useGameStore.getState().screen).toBe('scene');
     expect(useGameStore.getState().tutorialStepsSeen).toContain('welcome');
+  });
+
+  it('4-я карточка — «Строй схему.»', () => {
+    render(<TutorialScreen />);
+    for (let i = 0; i < 3; i++) fireEvent.click(screen.getByText('Далее'));
+    expect(screen.getByText('Строй схему.')).toBeInTheDocument();
   });
 
   it('«Пропустить» → scene + welcome', () => {
