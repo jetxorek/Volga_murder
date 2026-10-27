@@ -51,6 +51,12 @@ describe('MainMenuScreen', () => {
     expect(useGameStore.getState().screen).toBe('how_to_play');
   });
 
+  it('«Библиотека» → screen = library', () => {
+    render(<MainMenuScreen />);
+    fireEvent.click(screen.getByText('Библиотека'));
+    expect(useGameStore.getState().screen).toBe('library');
+  });
+
   it('«Настройки» → screen = settings', () => {
     render(<MainMenuScreen />);
     screen.getByText('Настройки').click();

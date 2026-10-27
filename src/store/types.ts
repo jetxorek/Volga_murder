@@ -4,6 +4,7 @@ import type { PlayerConnection } from '../schemas/connection';
 
 export type Screen =
   | 'main_menu'
+  | 'library'
   | 'tutorial'
   | 'how_to_play'
   | 'scene'

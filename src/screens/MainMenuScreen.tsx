@@ -34,6 +34,9 @@ export function MainMenuScreen() {
       <button onClick={() => setScreen('how_to_play')} style={{ minWidth: 240 }}>
         Как играть
       </button>
+      <button onClick={() => setScreen('library')} style={{ minWidth: 240 }}>
+        Библиотека
+      </button>
       <button onClick={() => setScreen('settings')} style={{ minWidth: 240 }}>
         Настройки
       </button>
