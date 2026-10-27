@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { MainMenuScreen } from './MainMenuScreen';
 import { useGameStore } from '../store';
 
@@ -31,10 +31,18 @@ describe('MainMenuScreen', () => {
   });
 
   it('«Новая игра» → screen = scene, currentScene = ch1_01', () => {
+    useGameStore.setState({ tutorialStepsSeen: ['welcome'] });
     render(<MainMenuScreen />);
-    screen.getByText('Новая игра').click();
+    fireEvent.click(screen.getByText('Новая игра'));
     expect(useGameStore.getState().screen).toBe('scene');
     expect(useGameStore.getState().currentScene).toBe('ch1_01');
+  });
+
+  it('«Новая игра» при первом запуске → screen = tutorial', () => {
+    useGameStore.setState({ tutorialStepsSeen: [] });
+    render(<MainMenuScreen />);
+    fireEvent.click(screen.getByText('Новая игра'));
+    expect(useGameStore.getState().screen).toBe('tutorial');
   });
 
   it('«Настройки» → screen = settings', () => {
