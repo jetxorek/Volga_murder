@@ -172,6 +172,7 @@ describe('FinaleScreen', () => {
 
   it('«Начать заново» → resetStore + startNewGame, currentScene = ch1_01', () => {
     useGameStore.getState().enterSceneById('ch1_01');
+    useGameStore.setState({ tutorialStepsSeen: ['welcome'] });
     render(<FinaleScreen />);
     screen.getByText('Начать заново').click();
     const s = useGameStore.getState();

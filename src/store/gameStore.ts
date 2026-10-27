@@ -29,6 +29,8 @@ export type StoreActions = {
   chooseOption: (optionId: string) => void;
   /** Обновляет updatedAt (используется персистом). */
   updateTimestamp: () => void;
+  /** Отметить шаг онбординга как пройденный (без дублей). */
+  markTutorialSeen: (step: string) => void;
   /** Игрок выбрал под-сцену в hub: pick + вход в под-сцену. */
   pickHubOptionAction: (subSceneId: string) => void;
   /** Завершение hub: переход на afterHubSceneId, очистка hubState. */
@@ -135,8 +137,15 @@ export const useGameStore = create<FullStore>()(
       startNewGame: () => {
         const playerId = getOrCreatePlayerId();
         const ironPoirot = get().ironPoirot;
-        set({ ...makeInitialData(playerId), ironPoirot, screen: 'scene' });
+        const tutorialStepsSeen = get().tutorialStepsSeen;
+        const seenTutorial = tutorialStepsSeen.includes('welcome');
+        set({
+          ...makeInitialData(playerId),
+          ironPoirot,
+          tutorialStepsSeen,
+        });
         get().enterSceneById(START_SCENE);
+        set({ screen: seenTutorial ? 'scene' : 'tutorial' });
       },
 
       resetStore: () => {
@@ -260,6 +269,12 @@ export const useGameStore = create<FullStore>()(
       },
 
       updateTimestamp: () => set({ updatedAt: Date.now() }),
+
+      markTutorialSeen: (step) => {
+        const state = get();
+        if (state.tutorialStepsSeen.includes(step)) return;
+        set({ tutorialStepsSeen: [...state.tutorialStepsSeen, step] });
+      },
 
       pickHubOptionAction: (subSceneId) => {
         const state = get();

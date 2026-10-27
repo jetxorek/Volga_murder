@@ -24,6 +24,7 @@ describe('initial state', () => {
 
 describe('startNewGame', () => {
   it('сбрасывает и входит в START_SCENE, slots 4→3', () => {
+    useGameStore.setState({ tutorialStepsSeen: ['welcome'] });
     useGameStore.getState().startNewGame();
     const s = useGameStore.getState();
     expect(s.screen).toBe('scene');

@@ -2,7 +2,14 @@ import type { Note, NoteLink } from '../schemas/note';
 import type { AccusationResult } from '../schemas/accusation';
 
 export type Screen =
-  'main_menu' | 'scene' | 'notebook' | 'accusation' | 'accusation_result' | 'finale' | 'settings';
+  | 'main_menu'
+  | 'tutorial'
+  | 'scene'
+  | 'notebook'
+  | 'accusation'
+  | 'accusation_result'
+  | 'finale'
+  | 'settings';
 
 export type Overlay =
   'none' | 'notebook' | 'character_card' | 'hints' | 'chapter_summary' | 'death';

@@ -16,7 +16,6 @@ export function SettingsScreen() {
 
   const onRestart = () => {
     if (window.confirm('Начать заново? Текущий прогресс будет потерян.')) {
-      resetStore();
       startNewGame();
     }
   };
